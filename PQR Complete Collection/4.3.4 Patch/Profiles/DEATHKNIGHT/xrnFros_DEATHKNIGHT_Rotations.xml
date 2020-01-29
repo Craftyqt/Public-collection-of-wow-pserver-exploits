@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?><DEATHKNIGHT><Rotation><RotationName>Frost PVP [5/31/5]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|Icebound Fortitude|Will of the Forsaken|Anti-Magic Shell|Blood Tap|Horn of Winter|--- offensive spells ---|Strangulate|Death Grip|Pillar of Frost|Empower Rune Weapon|Lichborne|Raise Dead|Death Pact|Outbreak|Death Coil|Obliterate|Howling Blast|Necrotic Strike|Frost Strike</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Test with this build
+http://www.wowhead.com/talent#j0hZGcRrfzRd0ufM
+
+-- Hotkeys
+Hold down ALT pause rotation
+Hold down LEFT SHIFT to Death Grip
+
+-- Behaviour
+To use abilities not included hold down ALT and click the abiliy, or use a keybind by example: ALT+D</RotationNotes></Rotation></DEATHKNIGHT>

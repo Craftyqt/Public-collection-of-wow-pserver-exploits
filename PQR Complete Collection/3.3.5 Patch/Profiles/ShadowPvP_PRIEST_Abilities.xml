@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>ShadowPvP: PWF</Name><Default>false</Default><SpellID>21562</SpellID><Actions></Actions><Lua>local PWF = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Power Word: Fortitude&amp;quot;)
+
+if PWF == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: SP</Name><Default>false</Default><SpellID>27683</SpellID><Actions></Actions><Lua>local SP = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Shadow Protection&amp;quot;)
+
+if SP == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: IF</Name><Default>false</Default><SpellID>588</SpellID><Actions></Actions><Lua>local IF = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Inner Fire&amp;quot;)
+local IW = UnitBuffID(&amp;quot;player&amp;quot;, 73413)
+
+if IF == nil and IW == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: VE</Name><Default>false</Default><SpellID>15286</SpellID><Actions></Actions><Lua>local VE = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Vampiric Embrace&amp;quot;)
+
+if VE == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: PWS</Name><Default>false</Default><SpellID>17</SpellID><Actions></Actions><Lua>local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local WS = UnitDebuffID(&amp;quot;player&amp;quot;, 6788)
+
+if myHealth &amp;lt; 99 and UnitAffectingCombat(&amp;quot;player&amp;quot;) and WS == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: NoDismount</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Shadowform</Name><Default>false</Default><SpellID>15473</SpellID><Actions></Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+
+if SF == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: PH</Name><Default>false</Default><SpellID>64044</SpellID><Actions></Actions><Lua>local AW = UnitBuffID(&amp;quot;target&amp;quot;, 31884)
+local UF = UnitBuffID(&amp;quot;target&amp;quot;, 49016)
+local B = UnitBuffID(&amp;quot;target&amp;quot;, 18499)
+local BL = UnitBuffID(&amp;quot;target&amp;quot;, 2825)
+local H = UnitBuffID(&amp;quot;target&amp;quot;, 32182)
+local SD = UnitBuffID(&amp;quot;target&amp;quot;, 51713)
+local PoF = UnitBuffID(&amp;quot;target&amp;quot;, 51271)
+local BF1 = UnitBuffID(&amp;quot;target&amp;quot;, 33702)
+local BF2 = UnitBuffID(&amp;quot;target&amp;quot;, 20572)
+local BF3 = UnitBuffID(&amp;quot;target&amp;quot;, 33697)
+local CoV = UnitBuffID(&amp;quot;target&amp;quot;, 99740)
+local R = UnitBuffID(&amp;quot;target&amp;quot;, 1719)
+local BS = UnitBuffID(&amp;quot;target&amp;quot;, 46924)
+
+if  AW ~= nil or UF ~= nil or B ~= nil or BL ~= nil or H ~= nil or SD ~= nil or PoF ~= nil or BF1 ~= nil or BF2 ~= nil or BF3~= nil or CoV ~= nil or R ~= nil or BS ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: PS</Name><Default>false</Default><SpellID>8122</SpellID><Actions></Actions><Lua>local bladestorm = UnitBuffID(&amp;quot;target&amp;quot;,46924)
+myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if myMana &amp;gt; 20 and bladestorm == nil then
+	if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) == 1 then
+  		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Mind Spike</Name><Default>false</Default><SpellID>73510</SpellID><Actions></Actions><Lua>local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch ~= nil and PQR_IsMoving(1) == false then 
+	return true 
+end</Lua><RecastDelay>75</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Enemy</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) == nil or UnitIsDead(&amp;quot;target&amp;quot;) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Mind Blast</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local target = UnitExists(&amp;quot;target&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch == nil then
+  if target ~= nil then
+	if PQR_IsMoving(1) then
+		return false
+	else
+		return true
+	end
+  else
+	return false
+  end
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: SWP</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch == nil then 
+  if target ~= nil then
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt; 2 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+  else
+	return false
+  end
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: SWP(Focus)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local focus = UnitExists(&amp;quot;focus&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch ~= nil and UnitIsUnit(&amp;quot;focus&amp;quot;, &amp;quot;target&amp;quot;) then
+	return false
+elseif focus ~= nil then
+	if SWP ~= nil and IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;focus&amp;quot;) and PQR_IsOutOfSight(&amp;quot;focus&amp;quot;) == false  then
+		if timer - GetTime() &amp;lt; 2 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: VT</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch ~= nil then 
+	return false
+elseif target ~= nil then
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt; 3 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>75</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: VT (Focus)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local focus = UnitExists(&amp;quot;focus&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch ~= nil and UnitIsUnit(&amp;quot;focus&amp;quot;, &amp;quot;target&amp;quot;) then
+	return false
+elseif focus ~= nil then
+	if VT ~= nil and IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;focus&amp;quot;) and PQR_IsOutOfSight(&amp;quot;focus&amp;quot;) == false  then
+		if timer - GetTime() &amp;lt; 3 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>75</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: SWD (20%)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local bossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local myTarget = UnitHealth(&amp;quot;target&amp;quot;)
+local _,_,_, WoF = UnitBuffID(&amp;quot;player&amp;quot;, 98619)
+local _,_,_, MoltenFeather = UnitBuffID(&amp;quot;player&amp;quot;, 98734)
+local _,_,_, Tormented = UnitDebuffID(&amp;quot;player&amp;quot;, 99403)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if target ~= nil then
+	if PQR_IsMoving(1) then
+		if Tormented ~= nil then
+			return false
+		else
+			if WoF ~= nil or MoltenFeather ~= nil then
+				if bossHP &amp;lt;= 25 then
+					return true
+				else
+					return false
+				end
+			else
+				return true
+			end
+		end
+	else
+		if bossHP &amp;lt;= 25 or myTarget &amp;lt; 8000 then
+			return true
+		else
+			return false
+		end
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Dispersion</Name><Default>false</Default><SpellID>47585</SpellID><Actions></Actions><Lua>local mana = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+if mana &amp;lt; 5 then
+	return true
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: DP</Name><Default>false</Default><SpellID>2944</SpellID><Actions>/startattack</Actions><Lua>local DP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 2944, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local _,_,_, WoF = UnitBuffID(&amp;quot;player&amp;quot;, 98619)
+local _,_,_, MoltenFeather = UnitBuffID(&amp;quot;player&amp;quot;, 98734)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch == nil then 
+  if target ~= nil then
+	if PQR_IsMoving(1) then
+		if WoF ~= nil or MoltenFeather ~= nil then
+			if DP ~= nil then
+				if timer - GetTime() &amp;lt; 3 then
+					return true
+				else
+					return false
+				end
+			else
+				return true
+			end
+		else
+			return true
+		end
+	else
+		if DP ~= nil then
+			if timer - GetTime() &amp;lt; 3 then
+				return true
+			else
+				return false
+			end
+		else
+			return true
+		end
+	end
+  else
+	return false
+  end
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Archangel</Name><Default>false</Default><SpellID>87151</SpellID><Actions></Actions><Lua>local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;, 87117)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if target ~= nil then
+	if DA ~= nil then
+		if DA &amp;gt;= 5 then
+			return true
+		end
+	else
+		return false
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Mind Flay</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>local target = UnitExists(&amp;quot;target&amp;quot;)
+local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+
+if DarkArch ~= nil then 
+	return false
+elseif target ~= nil then
+	if PQR_IsMoving(1) then
+		return false
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Shadowfiend</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if target ~= nil then
+	return true
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: MB (DA)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local DarkArch = UnitBuffID(&amp;quot;player&amp;quot;, 87153)
+local _,_,_,MindSpike = UnitDebuffID(&amp;quot;target&amp;quot;, 87178)
+
+if DarkArch ~= nil  and PQR_IsMoving(1) == false and MindSpike ~= nil then
+	if MindSpike == 3 then
+		return true
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Focus</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and GetCurrentKeyBoardFocus() == nil then
+	if UnitIsDead(&amp;quot;mouseover&amp;quot;) == nil and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+		FocusUnit(&amp;quot;mouseover&amp;quot;)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Mass Dispell</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local DS = UnitBuffID(&amp;quot;target&amp;quot;, )
+
+if DS ~= nil then
+	if UnitIsUnit(&amp;quot;target&amp;quot;, &amp;quot;mouseover&amp;quot;) and PQR_IsMoving(1) == false and PQR_IsOutOfSight(&amp;quot;target&amp;quot;) == false then
+  		CastSpellByName(tostring(GetSpellInfo(32375)))
+  			if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+ 		return true
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Dispell</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>PQR_CustomTarget = &amp;quot;player&amp;quot;
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+local debuff = { 5782, 118, 61305, 28272, 61721, 61780, 28271, 51514 }
+local targetdebuff = nil
+local havedebuff = 0
+
+
+
+if GetNumRaidMembers() &amp;gt; 0 then
+	group = &amp;quot;raid&amp;quot;
+	members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+local member = group..tostring(i)
+	if UnitInRange(member) and UnitIsFriend(&amp;quot;player&amp;quot;, member) and UnitIsDeadOrGhost(member) == nil  then
+		for i,v in ipairs(debuff) do
+			if UnitDebuffID(member,v) then 
+				havedebuff = 1
+				targetdebuff = PQR_CustomTarget
+					if havedebuff == 1 then
+						havedebuff = 0
+						return true
+				
+					end			 
+			end
+		end
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: SWD</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local PWS = UnitBuffID(&amp;quot;player&amp;quot;, 17)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if myMana &amp;lt;= 65 and PWS == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Fade</Name><Default>false</Default><SpellID>586</SpellID><Actions></Actions><Lua>local buff = { 45524, 1715, 3408, 59638, 20164, 25809, 31589, 51585, 50040, 50041, 31126, 31124, 122, 44614, 1604, 45524, 50040, 339, 45334, 58179, 61391, 19306, 19185, 35101, 5116, 61394, 2974, 54644, 50245, 50271, 54706, 4167, 33395, 83302, 55080, 11113, 6136, 120, 116, 44614, 31589, 63529, 20170, 87194, 31125, 3409, 26679, 64695, 63685, 8056, 8034, 18118, 18223, 63311, 23694, 1715, 12323, 39965, 55536, 13099, 29703 }
+local havebuff = nil
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;player&amp;quot;,v) then havebuff = 1 end
+end
+
+if havebuff then return true  end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Dispell2</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>PQR_CustomTarget = &amp;quot;player&amp;quot;
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+local debuff = { 5782, 118, 61305, 28272, 61721, 61780, 28271, 51514 }
+local targetdebuff = nil
+local havedebuff = 0
+
+
+
+if GetNumRaidMembers() &amp;gt; 0 then
+	group = &amp;quot;raid&amp;quot;
+	members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+local member = group..tostring(i)
+	if UnitInRange(member) and UnitIsFriend(&amp;quot;player&amp;quot;, member) and UnitIsDeadOrGhost(member) == nil  then
+		for i,v in ipairs(debuff) do
+			if UnitDebuffID(member,v) then 
+				havedebuff = 1
+				targetdebuff = PQR_CustomTarget
+					if havedebuff == 1 then
+						havedebuff = 0
+						return true
+				
+					end			 
+			end
+		end
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Check ShadowForm</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+
+if SF == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Renew</Name><Default>false</Default><SpellID>139</SpellID><Actions></Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local  Renew, _, _, _, _, _, Timer = UnitBuffID(&amp;quot;player&amp;quot;, 139)
+
+
+if SF == nil and myHealth &amp;lt; 85 then
+	if Renew ~= nil then
+		Timer = ( Timer - GetTime() )
+		if Timer &amp;lt; 2 then
+			return true
+		end
+	else
+		return true
+	end
+end</Lua><RecastDelay>50</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Flash Heal</Name><Default>false</Default><SpellID>2061</SpellID><Actions></Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+
+if SF == nil then
+	if myHealth &amp;lt; 85 and PQR_IsMoving(1) == false then 
+		return true
+	end
+end</Lua><RecastDelay>50</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Cancel ShadowForm</Name><Default>false</Default><SpellID>0</SpellID><Actions>/cancelform</Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+
+if SF ~= nil and IsLeftControlKeyDown() and GetCurrentKeyBoardFocus() == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowArena: Shadowform</Name><Default>false</Default><SpellID>15473</SpellID><Actions></Actions><Lua>local SF = UnitBuffID(&amp;quot;player&amp;quot;, 15473)
+
+if IsLeftAltKeyDown() and GetCurrentKeyBoardFocus() == nil and SF == nil then
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowArena: SWD</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local Name1 = UnitCastingInfo(&amp;quot;arena1&amp;quot;)
+local Name2 = UnitCastingInfo(&amp;quot;arena2&amp;quot;)
+local Name3 = UnitCastingInfo(&amp;quot;arena3&amp;quot;)
+
+if Name1 == &amp;quot;Polymorph&amp;quot; or Name2 == &amp;quot;Polymorph&amp;quot; or Name3 == &amp;quot;Polymorph&amp;quot; then
+	if GetSpellCooldown(32379) == 0 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Dispell Self</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>local i = 1
+local buff,_,_,count,bufftype,duration = UnitDebuff(&amp;quot;player&amp;quot;, i)
+while buff do
+  if bufftype == &amp;quot;Magic&amp;quot; then return true end
+  i = i + 1;
+  buff,_,_,count,bufftype,duration = UnitDebuff(&amp;quot;player&amp;quot;, i)
+end</Lua><RecastDelay>1</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShadowPvP: Focus/Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and GetCurrentKeyBoardFocus() == nil then
+	if UnitExists(&amp;quot;mouseover&amp;quot;) == nil then
+		return true
+	elseif UnitIsDead(&amp;quot;mouseover&amp;quot;) == nil and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+		FocusUnit(&amp;quot;mouseover&amp;quot;)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PRIEST>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Ability><Name>--Setup--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Code By Crystal_tech
+
+------------------------
+-- Initalize Data File--
+------------------------
+if PQR_RotationStarted then
+	PQR_RotationStarted = false
+	
+	---Try Not to Miss a Spell
+	PQR_AddToSpellDelayList(642, 0, 1) --Divine Shield
+	PQR_AddToSpellDelayList(853, 0, 1) --Hammer of Justice
+	PQR_AddToSpellDelayList(6940, 0, 1) --Hand of Sacrifice
+	PQR_AddToSpellDelayList(1044, 0, 1) --Hand of Freedom
+	PQR_AddToSpellDelayList(20066, 0, 1) --Repentance
+	PQR_AddToSpellDelayList(1022, 0, 1) --Hand of Protection
+	PQR_AddToSpellDelayList(79634, 58146, 1) --Golem&amp;apos;s Strength (spellID, itemID, delay)
+	PQR_AddToSpellDelayList(105706, 76095, 1) -- Potion of Mogu Power
+	
+	---Load Data File
+	if PQR_LoadLua ~= nil then
+		if PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) == false then
+			PQR_WriteToChat(&amp;quot;You are missing PQR_Nova_Data.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
+			PQR_StopRotation()
+			return true
+		end
+	end
+	
+	---Shoutouts
+	PQR_WriteToChat(&amp;quot;Ret Pally Rotation Loaded Successfully&amp;quot;)
+	PQR_WriteToChat(&amp;quot;Thanks to My Donators: Kinkeh, rsanviral, matee.sk, mrsalvas, mpzor, Unasrage&amp;quot;)
+end
+
+------------------
+--Level 90 Check--
+------------------
+if UnitLevel(&amp;quot;player&amp;quot;) ~= 90 then
+	PQR_WriteToChat(&amp;quot;Sorry, You need to be Level 90.&amp;quot;)
+	PQR_StopRotation()
+end
+
+-----------------
+--Set Variables--
+-----------------
+
+---PQR Related
+	PQR_ResetMovementTime	= 1
+	PQR_SpellAvailableTime	= ((select(3,GetNetStats()) + select(4,GetNetStats())) / 1000)
+	isMoving				= PQR_IsMoving(2)
+	
+---Player Related
+	PlayerMana				= select(3, Nova_UnitInfo(&amp;quot;player&amp;quot;)) --percent
+	PlayerHP				= select(1, Nova_UnitInfo(&amp;quot;player&amp;quot;)) --percent
+	PlayerPower				= select(5, Nova_UnitInfo(&amp;quot;player&amp;quot;))
+	PlayerCombat			= UnitAffectingCombat(&amp;quot;player&amp;quot;)
+
+
+---Target Related
+	if UnitExists(&amp;quot;target&amp;quot;)
+		and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+			EnemyExists = 1
+	else
+		EnemyExists = nil
+	end
+	
+	if EnemyExists then 
+		EnemyHP				= select(1, Nova_UnitInfo(&amp;quot;target&amp;quot;))
+	end
+
+---Keyboard Related
+	lShift					= Nova_Pause(1)
+	lCtrl					= Nova_Pause(2)
+	lAlt					= Nova_Pause(3)
+	rShift					= Nova_Pause(4)
+	rCtrl					= Nova_Pause(5)
+	rAlt					= Nova_Pause(6)
+
+-----------------
+--Set Functions--
+-----------------
+
+---Lust Effect Check
+Nova_LustCheck = nil
+function Nova_LustCheck()
+	if UnitBuffID(&amp;quot;player&amp;quot;, 2825) 
+		or UnitBuffID(&amp;quot;player&amp;quot;, 32182)
+		or UnitBuffID(&amp;quot;player&amp;quot;, 80353)
+		or UnitBuffID(&amp;quot;player&amp;quot;, 90355) then
+			return true
+	else
+		return false
+	end
+end
+
+--------------------
+--Special Routines--
+--------------------
+
+---Use Agi Potion
+if EnemyExists and PlayerCombat then
+	if Nova_LustCheck() == true or (UnitBuffID(&amp;quot;player&amp;quot;, 31884) and UnitBuffID(&amp;quot;player&amp;quot;, 86700)) then
+		if GetItemCount(76095) &amp;gt;= 1 and select(2, GetItemCooldown(76095)) == 0 then
+			UseItemByName(76095)
+		end
+	end
+end
+
+---Healthstone
+if EnemyExists and PlayerCombat then
+	if PlayerHP &amp;lt; 40
+		and select(3,GetItemCooldown(5512)) == 1 then 
+			UseItemByName(5512)
+	end
+end
+
+
+--End Code By Crystal_tech</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--Halt Rotation--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Code by Crystal_tech
+---General Pause for Spells that cast in combat without mod key press
+if lAlt
+or IsMounted()
+or SpellIsTargeting()
+or UnitInVehicle(&amp;quot;player&amp;quot;)
+or UnitIsDead(&amp;quot;target&amp;quot;) 
+or UnitIsDead(&amp;quot;player&amp;quot;)
+or not PlayerCombat then
+	return true
+end
+
+---Call Pet Back
+--if rAlt then
+--	PetFollow()
+--	ClearTarget()
+--end
+--End Code by Crystal_tech</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--Switch--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Code by Crystal_tech
+if modtime == nil then
+	modtime = 0
+end
+
+---Toggle for Main CDs
+if lShift and GetTime() - modtime &amp;gt; .2 then
+	modtime = GetTime()
+	if CDSwap then 
+		CDSwap = nil
+		PQR_WriteToChat(&amp;quot;Rapid Fire, Readiness, Stampede: \124cFFE61515Disabled&amp;quot;)
+	else
+		CDSwap = 1
+		PQR_WriteToChat(&amp;quot;Rapid Fire, Readiness, Stampede: \124cFF15E615Enabled&amp;quot;)
+	end
+end
+
+--End Code By Crystal_tech</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--Seals--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local pSeal = GetShapeshiftForm()
+
+if PlayerMana &amp;gt;=90 and pSeal ~= 1 then
+	CastShapeshiftForm(1)
+	return true
+elseif PlayerMana &amp;lt;= 30 and pSeal ~= 4then
+	CastShapeshiftForm(4)
+	return true
+end
+	
+--1: Seal of Truth 
+--2: Seal of Righteousness 
+--3: Seal of Justice 
+--4: Seal of Insight</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Inquisition</Name><Default>false</Default><SpellID>84963</SpellID><Actions></Actions><Lua>local inQ = select(7, UnitBuffID(84963))
+local dPur = select(7, UnitBuffID(90174))
+
+if EnemyExists and PlayerCombat then
+	if PlayerPower &amp;gt;= 3 or not dPur then
+		if not inQ or inQ - GetTime() &amp;lt;= 2 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Avenging Wrath</Name><Default>false</Default><SpellID>31884</SpellID><Actions></Actions><Lua>local inQ = select(7, UnitBuffID(84963))
+
+if EnemyExists and PlayerCombat then
+	if CDSwap and inQ then
+		if PQR_SpellAvailable(31884) then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Guardian of Ancient Kings</Name><Default>false</Default><SpellID>86698</SpellID><Actions></Actions><Lua>local inQ = select(7, UnitBuffID(84963))
+local aWrath = select(7, UnitBuffID(31884))
+
+if EnemyExists and PlayerCombat then
+	if inQ and aWrath then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Execution Sentence</Name><Default>false</Default><SpellID>114157</SpellID><Actions></Actions><Lua>local inQ = select(7, UnitBuffID(84963))
+
+if EnemyExists and PlayerCombat then
+	if CDSwap then
+ 		if inQ then
+ 			return true
+ 		end
+ 	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Templar&amp;apos;s Verdict 5</Name><Default>false</Default><SpellID>85256</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PlayerPower == 5 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Hammer of Wrath</Name><Default>false</Default><SpellID>24275</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PQR_SpellAvailable(24275) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Exorcism</Name><Default>false</Default><SpellID>879</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PQR_SpellAvailable(879) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Crusader Strike</Name><Default>false</Default><SpellID>35395</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PQR_SpellAvailable(35395) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Judgement</Name><Default>false</Default><SpellID>20271</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PQR_SpellAvailable(20271) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Templar&amp;apos;s Verdict 3</Name><Default>false</Default><SpellID>85256</SpellID><Actions></Actions><Lua>if EnemyExists and PlayerCombat then
+	if PlayerPower &amp;gt;= 3 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></PALADIN>

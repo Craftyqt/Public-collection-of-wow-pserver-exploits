@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?><INTERRUPT><Options><ProfileVersion>5.1.0-123012</ProfileVersion><AbilityURL></AbilityURL><RotationURL></RotationURL><LuaURL></LuaURL></Options><Rotation><RotationName>--Tamer--</RotationName><RotationDefault>false</RotationDefault><RotationList>--Tamer--</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Modify the var mobuwanttamed by adding the name of the mob to tame in between the &amp;quot;&amp;quot;
+
+eg: local mobuwanttamed = &amp;quot;sporebat&amp;quot;
+
+and save it.
+
+have no target and no pet out and one open slot.</RotationNotes></Rotation></INTERRUPT>

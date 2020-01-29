@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>-- Init --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+	-- Should be reloaded every time you reload Profile (No more needing to /rl)
+	PQR_RotationStarted = false
+
+--PQR_WriteToChat(&amp;quot;|cff0088FFHoly Paladin Profile Version - |cff33CC002.0&amp;quot;)
+PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Druid Profile Verions - 0.2&amp;quot;, nil, &amp;quot;00FF00&amp;quot;)
+PQR_SwapCheckTimer = 0
+
+--------------------
+-- Register CVars
+--------------------
+if GetCVar(&amp;quot;Nova_Recording&amp;quot;) == nil then RegisterCVar(&amp;quot;Nova_Recording&amp;quot;, 0) end
+if GetCVar(&amp;quot;Nova_DisableCD&amp;quot;) == nil then RegisterCVar(&amp;quot;Nova_DisableCD&amp;quot;, 0) end
+if GetCVar(&amp;quot;Nova_Mouseover&amp;quot;) == nil then RegisterCVar(&amp;quot;Nova_Mouseover&amp;quot;, 0) end
+
+--------------------
+-- Slash Commands
+--------------------
+SLASH_RECORDING1 = &amp;quot;/recording&amp;quot;
+SLASH_RECORDING2 = &amp;quot;/recraid&amp;quot;
+SLASH_RECORDING3 = &amp;quot;/recordingraid&amp;quot;
+function SlashCmdList.RECORDING(msg, editbox)
+	if not GetCVarBool(&amp;quot;Nova_Recording&amp;quot;) then
+		SetCVar(&amp;quot;Nova_Recording&amp;quot;, 1)
+		for i=1, 20 do ChatFrame1:AddMessage(&amp;quot; &amp;quot;) end
+	else
+		PQR_WriteToChat(&amp;quot;Silent Mode Disabled&amp;quot;)
+		SetCVar(&amp;quot;Nova_Recording&amp;quot;, 0)
+	end
+end
+
+SLASH_DISABLECD1 = &amp;quot;/disablecd&amp;quot;
+function SlashCmdList.DISABLECD(msg, editbox)
+	if not GetCVarBool(&amp;quot;Nova_DisableCD&amp;quot;) then
+		if not GetCVarBool(&amp;quot;Nova_Recording&amp;quot;) then
+			PQR_WriteToChat(&amp;quot;Disabling your Automatic Cooldown Usage&amp;quot;)
+		end
+		SetCVar(&amp;quot;Nova_DisableCD&amp;quot;, 1)
+	else
+		if not GetCVarBool(&amp;quot;Nova_Recording&amp;quot;) then
+			PQR_WriteToChat(&amp;quot;Enabling your Automatic Cooldown Usage&amp;quot;)
+		end
+		SetCVar(&amp;quot;Nova_DisableCD&amp;quot;, 0)
+	end
+end
+
+SLASH_CLEARCHAT1 = &amp;quot;/clearchat&amp;quot;
+function SlashCmdList.CLEARCHAT(msg, editbox)
+	for i=1, 20 do
+		ChatFrame1:AddMessage(&amp;quot; &amp;quot;)
+	end
+end
+
+
+SLASH_DISABLEMOUSEOVER1 = &amp;quot;/nova mouseover&amp;quot;
+SLASH_DISABLEMOUSEOVER2 = &amp;quot;/nm&amp;quot;
+function SlashCmdList.DISABLEMOUSEOVER(msg, editbox)
+	if not GetCVarBool(&amp;quot;Nova_Mouseover&amp;quot;) then
+		if not GetCVarBool(&amp;quot;Nova_Recording&amp;quot;) then
+			PQR_WriteToChat(&amp;quot;Enabled Mouseover.&amp;quot;)
+		end
+		SetCVar(&amp;quot;Nova_Mouseover&amp;quot;, 1)
+	else
+		if not GetCVarBool(&amp;quot;Nova_Recording&amp;quot;) then
+			PQR_WriteToChat(&amp;quot;Disabled Mouseover.&amp;quot;)
+		end
+		SetCVar(&amp;quot;Nova_Mouseover&amp;quot;, 0)
+	end		
+end
+
+-- Variables
+PQR_ResetMovementTime = 0.3
+PQR_SpellAvailableTime = ((select(3,GetNetStats()) + select(4,GetNetStats())) / 1000)
+PQR_AddToSpellDelayList(78674, 0, 1) -- Swiftmend
+
+	if PQR_LoadLua ~= nil then
+		-- Load Data File
+		if PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) == false then
+			PQR_WriteToChat(&amp;quot;You are missing PQR_Nova_Data.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
+			PQR_StopRotation()
+			return true
+		end
+	end
+	
+	PQR_Spec = GetSpecialization()
+	if PQR_Spec ~= 1 then
+		PQR_WriteToChat(&amp;quot;You must be in Balance Spec. Please switch then try again.&amp;quot;, &amp;quot;Warning&amp;quot;)
+		PQR_StopRotation()
+		return true
+	end
+end
+
+if Nova_Mod() == 4
+ or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;) 
+ or IsMounted() 
+ or GetShapeshiftForm() == 6 then 
+ 	return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Combat Log --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if CombatLog == nil then
+    Nova_CombatLog = CreateFrame(&amp;apos;Frame&amp;apos;)
+
+    Nova_CombatLog:RegisterEvent(&amp;quot;COMBAT_LOG_EVENT_UNFILTERED&amp;quot;)
+    function CombatLog_OnEvent(self, event, ...)
+        local type, _, sourceGUID, sourceNAME, _, _, destGUID, destNAME = select(2, ...)
+        if (event==&amp;quot;COMBAT_LOG_EVENT_UNFILTERED&amp;quot;) then
+            if (type==&amp;quot;SPELL_CAST_SUCCESS&amp;quot;) then
+                if sourceGUID == Nova_GUID(&amp;quot;player&amp;quot;) then
+   					PlayerSpell = select(12, ...)
+    				CastTarget = destGUID
+				end
+            end
+        end
+ 	end
+
+
+    
+    Nova_CombatLog:SetScript(&amp;quot;OnEvent&amp;quot;, CombatLog_OnEvent)
+    
+    CombatLog = true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Debuff Handler</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>DebuffRecastTime = 2.5
+if UnitBuffID(&amp;quot;player&amp;quot;, 16886)
+ and select(7, UnitBuffID(&amp;quot;player&amp;quot;, 16886)) - GetTime() &amp;lt; 4 then
+ 	DebuffRecastTime = 4.5
+end
+
+if TargetValidated then
+	if UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;) then
+		if select(7, UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;target&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;target&amp;quot;)
+		return true
+	end
+	
+	if UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Sunfire, &amp;quot;PLAYER&amp;quot;) then
+		if select(7, UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Sunfire, &amp;quot;PLAYER&amp;quot;)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Sunfire), &amp;quot;target&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Sunfire), &amp;quot;target&amp;quot;)
+		return true
+	end
+end
+
+if FocusValidated then
+	if UnitDebuffID(&amp;quot;focus&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;) then
+		if select(7, UnitDebuffID(&amp;quot;focus&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;focus&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;focus&amp;quot;)
+		return true
+	end
+	
+	if UnitDebuffID(&amp;quot;focus&amp;quot;, PQ_Sunfire) then
+		if select(7, UnitDebuffID(&amp;quot;focus&amp;quot;, PQ_Sunfire, &amp;quot;PLAYER&amp;quot;)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Sunfire, &amp;quot;PLAYER&amp;quot;), &amp;quot;focus&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Sunfire), &amp;quot;focus&amp;quot;)
+		return true
+	end
+end
+
+if MouseoverValidated 
+ and GetCVarBool(&amp;quot;Nova_Mouseover&amp;quot;) then
+	if UnitDebuffID(&amp;quot;mouseover&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;) then
+		if select(7, UnitDebuffID(&amp;quot;mouseover&amp;quot;, PQ_Moonfire, &amp;quot;PLAYER&amp;quot;)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;mouseover&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Moonfire), &amp;quot;mouseover&amp;quot;)
+		return true
+	end
+	
+	if UnitDebuffID(&amp;quot;mouseover&amp;quot;, PQ_Sunfire) then
+		if select(7, UnitDebuffID(&amp;quot;mouseover&amp;quot;, PQ_Sunfire)) - GetTime() &amp;lt; DebuffRecastTime then
+			CastSpellByName(GetSpellInfo(PQ_Sunfire), &amp;quot;mouseover&amp;quot;)
+			return true
+		end
+	else
+		CastSpellByName(GetSpellInfo(PQ_Sunfire), &amp;quot;mouseover&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Starfire</Name><Default>false</Default><SpellID>2912</SpellID><Actions></Actions><Lua>if TargetValidated 
+ and PQR_SpellAvailable(2912)
+ and EclipseBar == 1
+ and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+ and not PQR_IsMoving() then
+ 	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Wrath</Name><Default>false</Default><SpellID>5176</SpellID><Actions></Actions><Lua>if TargetValidated 
+ and PQR_SpellAvailable(5176)
+ and EclipseBar == 0
+ and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+ and not PQR_IsMoving() then
+ 	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Starsurge</Name><Default>false</Default><SpellID>78674</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(PQ_Starsurge) then
+	if TargetValidated then
+		if UnitBuffID(&amp;quot;player&amp;quot;, 93400) then
+			return true
+		elseif not PQR_IsMoving() then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Starfall</Name><Default>false</Default><SpellID>48505</SpellID><Actions></Actions><Lua>if TargetValidated 
+ and PQR_SpellAvailable(48505)
+ and not UnitBuffID(&amp;quot;player&amp;quot;, 48505) then
+ 	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Cooldowns</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if ( SpecialUnit()
+ and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) == 1 ) 
+ or Nova_Mod() == 8 then
+	if IsPlayerSpell(106731) 
+	 and PQR_SpellAvailable(106731) 
+	 and (UnitPower(&amp;quot;player&amp;quot;, 8) == -100 
+	  or UnitPower(&amp;quot;player&amp;quot;, 8) == 100
+	  or UnitBuffID(&amp;quot;player&amp;quot;, 112071)) then -- Incarnation
+		CastSpellByName(GetSpellInfo(102560), &amp;quot;player&amp;quot;)
+		return true
+	end
+	
+	if IsPlayerSpell(124974) 
+	 and PQR_SpellAvailable(124974) 
+	 and UnitBuffID(&amp;quot;player&amp;quot;, 112071) then -- Nature&amp;apos;s Vigil
+	 	CastSpellByName(GetSpellInfo(124974), &amp;quot;player&amp;quot;)
+		return true
+	end
+	
+	if IsPlayerSpell(112071) 
+	 and PQR_SpellAvailable(112071) 
+	 and not UnitBuffID(&amp;quot;player&amp;quot;, 48518) 
+	 and not UnitBuffID(&amp;quot;player&amp;quot;, 48517) then -- Celestial Alignment
+	 	CastSpellByName(GetSpellInfo(112071), &amp;quot;player&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Hurricane</Name><Default>false</Default><SpellID>16914</SpellID><Actions></Actions><Lua>if Nova_Mod() == 32 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Click</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Target Validation</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>TargetValidated = false
+MouseoverValidated = false
+FocusValidated = false
+
+if UnitExists(&amp;quot;target&amp;quot;) then
+	if TargetValidation(&amp;quot;target&amp;quot;, 8921) 
+	 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+		TargetValidated = true
+	else
+		for i=1, #PQ_Aggro do
+			if Nova_GUID(&amp;quot;target&amp;quot;) == PQ_Aggro[i] then
+				TargetValidated = true
+			end
+		end
+	end
+end
+
+if UnitExists(&amp;quot;focus&amp;quot;) then
+	if TargetValidation(&amp;quot;focus&amp;quot;, 8921) 
+	 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;focus&amp;quot;) then
+		FocusValidated = true
+	else
+		for i=1, #PQ_Aggro do
+			if Nova_GUID(&amp;quot;focus&amp;quot;) == PQ_Aggro[i] then
+				FocusValidated = true
+			end
+		end
+	end
+end
+
+if UnitExists(&amp;quot;mouseover&amp;quot;) then
+	if TargetValidation(&amp;quot;mouseover&amp;quot;, 8921) 
+	 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+		MouseoverValidated = true
+	else
+		for i=1, #PQ_Aggro do
+			if Nova_GUID(&amp;quot;mouseover&amp;quot;) == PQ_Aggro[i] then
+				MouseoverValidated = true
+			end
+		end
+	end
+	
+	
+	if Nova_Mod() == 16 then
+		if UnitIsUnit(&amp;quot;focus&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+			ClearFocus()
+		else
+			FocusUnit(&amp;quot;mouseover&amp;quot;)
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Eclipse Bar --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>EclipseDirection = GetEclipseDirection()
+EclipsePower = UnitPower(&amp;quot;player&amp;quot;, 8) + 100
+Casting = UnitCastingInfo(&amp;quot;player&amp;quot;)
+EclipseBar = 1 -- 1 = solar, 0 = lunar
+
+if EclipseDirection == &amp;quot;sun&amp;quot; then
+	EclipseBar = 1
+elseif EclipseDirection == &amp;quot;moon&amp;quot; then
+	EclipseBar = 0
+end
+	
+if EclipseBar == 0 then
+	if Casting == GetSpellInfo(PQ_Wrath) then
+		if EclipsePower - 30 &amp;lt;= 0 then
+			EclipseBar = 1
+		end
+	elseif Casting == GetSpellInfo(PQ_Starsurge) then
+		if EclipsePower - 40 &amp;lt;= 0 then
+			EclipseBar = 1
+		end
+	end
+elseif Eclipsebar == 1 then
+	if Casting == GetSpellInfo(PQ_Starfire) 
+	 or Casting == GetSpellInfo(PQ_Starsurge) then
+		if EclipsePower + 40 &amp;gt;= 200 then
+			EclipseBar = 0
+		end
+	end
+end
+
+if UnitBuffID(&amp;quot;player&amp;quot;, 112071)
+ and select(7, UnitBuffID(&amp;quot;player&amp;quot;, 112071)) - GetTime() &amp;gt; 1.5 then
+ 	EclipseBar = 1
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mark of the Wild</Name><Default>false</Default><SpellID>1126</SpellID><Actions></Actions><Lua>if not PQ_AuraInfo(1) then
+	return true
+end</Lua><RecastDelay>1000</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>

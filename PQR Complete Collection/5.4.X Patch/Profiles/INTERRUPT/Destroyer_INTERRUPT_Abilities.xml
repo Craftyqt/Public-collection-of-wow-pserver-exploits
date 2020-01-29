@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?><INTERRUPT><Ability><Name>Convert Sparkling Shards</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetItemCount(72092) &amp;lt;= 0 and GetItemCount(72093) &amp;lt;= 0 then
+		--Sparkling shards to serpent eyes
+		if GetItemCount(90407) &amp;gt;= 10 then
+			UseItemByName(90407)
+		end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Prospecting</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if ptime == nil then
+	ptime = 0
+end
+
+local waitLoot = GetTime() - ptime
+if waitLoot &amp;gt; 2 then
+	--ghost iron
+	if GetItemCount(72092) &amp;gt;= 5 then
+		ptime = GetTime()
+		RunMacroText(&amp;quot;/cast Prospecting&amp;quot;)
+		RunMacroText(&amp;quot;/use Ghost Iron Ore&amp;quot;)
+	end
+	
+	--kyparite
+	if GetItemCount(72093) &amp;gt;= 5 then
+		ptime = GetTime()
+		CastSpellByID(31252)
+		UseItemByName(72093)
+	end
+
+	--white Trillium 
+	if GetItemCount(72103) &amp;gt;= 5 then
+		ptime = GetTime()
+		RunMacroText(&amp;quot;/cast Prospecting&amp;quot;)
+		RunMacroText(&amp;quot;/use white tril&amp;quot;)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Disenchant</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if detime == nil then
+	detime = 0
+end
+
+--if not PQR_IsCastingSpell(13262) and
+if GetTime() - detime &amp;gt; 2.5 then
+	if GetItemCount(83793) &amp;gt;= 1 then
+		--Disenchant green ornate rings
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(83793)	
+	elseif GetItemCount(83794) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(83794) 
+	elseif GetItemCount(3480) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(3480) 
+	elseif GetItemCount(2857) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(2857)
+	elseif GetItemCount(3842) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(3842) 
+	elseif GetItemCount(3835) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(3835)
+	elseif GetItemCount(2868) &amp;gt;= 1 then
+		--Disenchant green Shadowfire necks
+		detime = GetTime()
+		CastSpellByName(GetSpellInfo(13262))
+		UseItemByName(2868) 
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>functions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></INTERRUPT>

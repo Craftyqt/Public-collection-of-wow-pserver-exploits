@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Rotation><RotationName>Arcane PvE [33/5/3]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- defensive spells ---|Ice Block|Polymorph|Ring of Frost|Time Warp|Mage Armor|Arcane Brilliance|Focus Magic|Mana Gem (Create)|Mana Gem (Use)|Evocation|Assist Tank|Arcane Explosion|--- offensive spells ---|Spellsteal|USE: Trinket 1|USE: Trinket 2|USE: Gloves|Mirror Image|Presence Of Mind|Arcane Power|Flame Orb|Arcane Barrage|Arcane Missiles|Arcane Blast</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Test with this build
+http://www.wowhead.com/talent#ohIMrRhRMRRofZc
+
+-- Hotkeys
+Hold down ALT pause rotation
+Hold Down LEFT SHIFT to cast Ring of Frost at mouse position
+Hold down LEFT CONTROL to cast Polymorph on mouseover
+Hold down RIGHT SHIFT to use Time Warp
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Behaviour
+Cast Mirror Images if target hp is ten times player hp
+Cast Iceblock if player hp &amp;lt; 10%
+Focus Magic is cast on party/raid member with hightest mana
+</RotationNotes></Rotation></MAGE>

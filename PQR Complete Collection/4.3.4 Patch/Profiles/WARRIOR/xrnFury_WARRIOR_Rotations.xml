@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Rotation><RotationName>Fury PvE [8/31/2]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|--- special events ---|Battle Shout|Autotarget|--- offensive spells ---|Berserker Rage|Victory Rush|USE: Gloves|USE: Trinket 1|USE: Trinket 2|Whirlwind|Inner Rage|Heroic Strike / Cleave|Execute|Colossus Smash|Bloodthirst|Raging Blow|Slam</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#LG0cZcrrcszkMfdZb
+
+-- Hotkeys
+Hold down ALT pause rotation
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Useful spells not included in the rotation
+Death Wish, Recklessness
+
+-- Behaviour
+If none armor debuff is active 10 seconds after you select a target and the target hp is highter than (playerhp x 10) the sunder armor ll be apply</RotationNotes></Rotation></WARRIOR>

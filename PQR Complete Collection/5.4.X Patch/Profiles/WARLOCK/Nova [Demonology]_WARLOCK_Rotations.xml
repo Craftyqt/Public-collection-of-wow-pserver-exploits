@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?><WARLOCK><Options><ProfileVersion>1.2</ProfileVersion><AbilityURL>https://www.assembla.com/code/nova-project/subversion/node/blob/trunk/Profiles/WARLOCK/Nova%20%5BDemonology%5D_WARLOCK_Abilities.xml</AbilityURL><RotationURL>https://www.assembla.com/code/nova-project/subversion/node/blob/trunk/Profiles/WARLOCK/Nova%20%5BDemonology%5D_WARLOCK_Rotations.xml</RotationURL><LuaURL>https://www.assembla.com/code/nova-project/subversion/node/blob/trunk/Data/PQR_Nova_Data.lua</LuaURL></Options><Rotation><RotationName>Standard Profile</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] MSV Events|[Misc] Pause Rotation|[Misc] Pet Management|[Support] Automatic Buffing|[Misc] Instance: Combat Detection|[Support] Level 90 Talent|[Support] Level 45 Talent|[Support] Level 30 Talent|[Support] Racials|[Support] Life Tap|[Support] Soulstone|[Support] Soulshatter|[Support] Imp Swarm|[Support] Doomguard|[Support] Healthstone|[Support] Potion Usage|[Support] Dark Regeneration|[Support] Alchemy: Lifeblood|[Support] Dark Soul: Knowledge|Metamorphosis: Doom|[Pet] Command Demon|[Pet] Grimoire of Service|Metamorphosis: Cancel|Metamorphosis: Carrion Swarm|Metamorphosis: Doom (Mouseover)|Metamorphosis: Soul Fire|Metamorphosis: Touch of Chaos|Metamorphosis|Curse of the Elements|Corruption|Corruption (Focus)|Corruption (Mouseover)|Hand of Gul&amp;apos;Dan|Soul Fire|Shadowbolt|Fel Flame</RotationList><RequireCombat>false</RequireCombat><RotationNotes>All new!
+Automatic Single-Target Demonology Warlock rotation based upon personal experience and SimulationCraft - Ready for 5.2!
+
+With the new advanced Metamorphosis weaving, the profile now automatically adapts to strong procs and buffs and plans accordingly! :D
+
+Support:
+- Comprehensive in-game rotation configuration via PQInterface
+
+- Automatic Soulstoning of Tank/Healer targets
+- Automatic Healthstone at set percentages
+- Automatic Dark Regeneration at set percentages
+- Automatic usage of Racials
+- Automatic usage of Potions during Heroism
+.. and much, much more! Requires PQInterface v2.0+ for user customization.
+
+Dark Apotheosis support coming soon!
+
+Keybindings:
+- Left Alt: Doomguard
+- Left Shift: Dark Soul Knowledge
+- Left Control + Left Alt: Level 30 Talent of choice
+
+- Right Alt: Pause Rotation
+- Right Shift: Level 45 Talent of choice
+- Right Control: Level 90 Talent of choice
+- Right Alt + Right Shift: Toggle Cooldown Mode</RotationNotes></Rotation><Rotation><RotationName>AoE Profile</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] MSV Events|[Misc] Pause Rotation|[Misc] Pet Management|[Support] Automatic Buffing|[Misc] Instance: Combat Detection|[Support] Level 90 Talent|[Support] Level 45 Talent|[Support] Level 30 Talent|[Support] Racials|[Support] Life Tap|[Support] Soulstone|[Support] Soulshatter|[Support] Imp Swarm|[Support] Doomguard|[Support] Healthstone|[Support] Potion Usage|[Support] Dark Regeneration|[Support] Alchemy: Lifeblood|[Support] Dark Soul: Knowledge|[Pet] Command Demon|[Pet] Grimoire of Service|Metamorphosis: Doom|Metamorphosis: Cancel|Metamorphosis: Carrion Swarm|Metamorphosis: Immolation Aura|Metamorphosis: Aura of the Elements|Metamorphosis: Doom (Mouseover)|Metamorphosis: Harvest Life|Metamorphosis: Void Ray|Metamorphosis|Corruption|Corruption (Focus)|Corruption (Mouseover)|Hand of Gul&amp;apos;Dan|Harvest Life|Hellfire</RotationList><RequireCombat>false</RequireCombat><RotationNotes>All new!
+Automatic AoE Demonology Warlock rotation based upon personal experience and SimulationCraft - Ready for 5.2!
+
+With the new advanced Metamorphosis weaving, the profile now automatically adapts to strong procs and buffs and plans accordingly! :D
+
+Support:
+- Comprehensive in-game rotation configuration via PQInterface
+
+- Automatic Soulstoning of Tank/Healer targets
+- Automatic Healthstone at set percentages
+- Automatic Dark Regeneration at set percentages
+- Automatic usage of Racials
+- Automatic usage of Potions during Heroism
+.. and much, much more! Requires PQInterface v2.0+ for user customization.
+
+Dark Apotheosis support coming soon!
+
+Keybindings:
+- Left Alt: Doomguard
+- Left Shift: Dark Soul Knowledge
+- Left Control + Left Alt: Level 30 Talent of choice
+
+- Right Alt: Pause Rotation
+- Right Shift: Level 45 Talent of choice
+- Right Control: Level 90 Talent of choice
+- Right Alt + Right Shift: Toggle Cooldown Mode</RotationNotes></Rotation></WARLOCK>

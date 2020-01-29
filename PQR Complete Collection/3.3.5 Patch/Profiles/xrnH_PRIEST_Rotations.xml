@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>Holy PvE [6/32/3]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- defensive spells ---|Autoarget LowHP|Shadow Protection|Power Word: Fortitude|Inner Fire|Mass Dispel|Lightwell|Fade|Arcane Torrent|HW Sanctuary|--- healing spells ---|Shadowfiend|Guardian Spirit|Dispell Magic|Prayer of Mending|Circle of Healing|Prayer of Healing|Renew|HW Serenity|Greater Heal|Binding Heal|Flash Heal|Heal|Power Word: Shield</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#bchZfhrrRkrkczoh
+
+-- Hotkeys
+Tap RIGHT CONTROL to switch chakra states
+Hold down RIGHT ALT to cast Mass Dispell at mouse position
+Hold down RIGHT SHIFT to place Lightwell at mouse location
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to enable healing while out of combat
+Target or mouseover a friend to focus heals on him and ignore other players
+
+-- Useful spells not included in the rotation
+Hymn of Hope, Divine Hymn, Trinkets</RotationNotes></Rotation></PRIEST>

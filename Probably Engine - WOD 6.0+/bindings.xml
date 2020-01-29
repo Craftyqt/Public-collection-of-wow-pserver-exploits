@@ -1,0 +1,14 @@
+<Bindings>
+    <Binding name="Probably Toggle">
+        ProbablyEngine.buttons.toggle('MasterToggle')
+    </Binding>
+    <Binding name="Probably Cooldowns">
+        ProbablyEngine.buttons.toggle('cooldowns')
+    </Binding>
+    <Binding name="Probably AoE">
+        ProbablyEngine.buttons.toggle('multitarget')
+    </Binding>
+    <Binding name="Probably Interrupts">
+        ProbablyEngine.buttons.toggle('interrupt')
+    </Binding>
+</Bindings>

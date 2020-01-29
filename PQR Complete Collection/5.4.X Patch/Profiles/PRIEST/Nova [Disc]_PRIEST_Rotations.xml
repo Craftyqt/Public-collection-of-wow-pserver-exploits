@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Options><ProfileVersion>1.3.1</ProfileVersion><AbilityURL>http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20%5BDisc%5D_PRIEST_Abilities.xml</AbilityURL><RotationURL>http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20%5BDisc%5D_PRIEST_Rotations.xml</RotationURL><LuaURL>http://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Data.lua</LuaURL></Options><Rotation><RotationName>Disc Master</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Data FIle Info --|PW: Barrier|Pet Support|Leap of Faith|Buffs|-- Stop Casting --|PW: Shield|Prayer of Mending|Mindbender|Shadowfiend|Purify|PW: Solace|Holy Fire|Smite|Penance|Prayer of Healing|Flash Heal|Archangel|Greater Heal|Binding Heal|Heal|Dispel Magic</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Keybinds:
+Left Shift - Pause
+Left Control - Power Word: Barrier
+Left Alt - Leap of Faith
+Right Shift -
+Right Control -
+Right Alt - Change which Inner you use.</RotationNotes></Rotation></PRIEST>

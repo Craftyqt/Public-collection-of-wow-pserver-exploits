@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Rotation><RotationName>Survival [3/7/31]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|--- special events ---|Mend Pet|Misdirection|Scatter Shot|Hunter&amp;apos;s Mark|Assist Tank|Aspects|Ice Trap|--- offensive spells ---|Tranquilizing Shot|Kill Shot|Serpent Sting|Raptor Strike|USE: Gloves|USE: Trinket 1|USE: Trinket 2|Rapid Fire|Multi-Shot|Explosive Shot|Black Arrow|Arcane Shot|Cobra Shot</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#ccZfMZcbhfMhrRsk
+
+-- Hotkeys
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to use Scatter Shot on mouseover
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Behaviour
+Keep your mouse on mob when aoe is active to aim trap
+Rotation pause while trap launcher is active to allow use any trap
+Serpent sting is only casted on mobs with highter hp than player
+Hunter Mark cast out of combat if target hp is highter than player hp</RotationNotes></Rotation></HUNTER>

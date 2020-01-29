@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Ability><Name>--Configs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>---------------------------
+--Data Files and Frame Data
+---------------------------
+if PQR_RotationStarted then
+	PQR_RotationStarted = false
+	
+	--Survival Table for frames
+	Nova_ValueCheck = nil
+	Nova_ValueCheck = {
+		[1] =	{ Var1 = nil,	Text = &amp;quot;Out of Combat Options&amp;quot;,			Var2 = nil },
+		[2] =	{ Var1 = nil,	Text = &amp;quot;Enable Auto Aspect&amp;quot;,			Var2 = 1 },
+		[3] =	{ Var1 = nil,	Text = &amp;quot;Rotational Options&amp;quot;,			Var2 = nil },
+		[4] = 	{ Var1 = nil,	Text = &amp;quot;Auto Use Cooldowns&amp;quot;,			Var2 = 1 },
+		[5] =	{ Var1 = nil,	Text = &amp;quot;Use Agility Pot on Lust&amp;quot;,		Var2 = 1 },
+		[6] =	{ Var1 = nil,	Text = &amp;quot;Enable Cleave Shots&amp;quot;,			Var2 = 1 },
+		[7] =	{ Var1 = 60,	Text = &amp;quot;Arcane Shot Min Focus&amp;quot;,			Var2 = nil },
+		[8] =	{ Var1 = nil,	Text = &amp;quot;Utility Options&amp;quot;,				Var2 = nil },
+		[9] =	{ Var1 = nil,	Text = &amp;quot;Enable Misdirection&amp;quot;,			Var2 = 1 },
+		[10] =	{ Var1 = nil,	Text = &amp;quot;Use Tranq Shot&amp;quot;,				Var2 = 1 },
+		[11] =	{ Var1 = nil,	Text = &amp;quot;Use Widows Venom&amp;quot;,				Var2 = 0 },
+		[12] =	{ Var1 = nil,	Text = &amp;quot;Freeze Trap&amp;quot;,					Var2 = 1 },
+		[13] =	{ Var1 = nil,	Text = &amp;quot;Ice Trap&amp;quot;,						Var2 = 0 },
+		[14] =	{ Var1 = nil,	Text = &amp;quot;Hunter Pet Options&amp;quot;,			Var2 = nil },
+		[15] =	{ Var1 = nil,	Text = &amp;quot;Enable Mend Pet&amp;quot;,				Var2 = 1 },
+		[16] =	{ Var1 = 75,	Text = &amp;quot;Mend Pet Health%&amp;quot;,				Var2 = nil },
+		[17] =	{ Var1 = nil,	Text = &amp;quot;Survivability Options&amp;quot;,			Var2 = nil },
+		[18] =	{ Var1 = nil,	Text = &amp;quot;Use Healthstone&amp;quot;,				Var2 = 1 },
+		[19] =	{ Var1 = 30, 	Text = &amp;quot;Health% for Healthstone&amp;quot;,		Var2 = nil }
+	}
+	
+	Nova_CooldownCheck = nil
+	Nova_CooldownCheck = {
+		--Change Mod = # to the key you want it to default to
+		-- 1 = lShift, 2 = lCtrl, 4 = lAlt, 8 = rShift, 1 6= rCtrl, 32 = rAlt
+		[1] = { Mod = 1,	Text = &amp;quot;Force Cooldowns&amp;quot;,			Var1 = 1},
+		[2] = { Mod = 2,	Text = &amp;quot;Area of Effect&amp;quot;,			Var1 = 1},
+		[3] = { Mod = 4,	Text = &amp;quot;Pause Rotation&amp;quot;,			Var1 = 1},
+		[4] = { Mod = 32,	Text = &amp;quot;Recall Pet/Clear Target&amp;quot;,	Var1 = 1},
+		[5] = { Mod = 16,	Text = &amp;quot;Explosive Trap&amp;quot;,			Var1 = 1},
+		[6] = { Mod = 8, 	Text = &amp;quot;Freezing Trap&amp;quot;,				Var1 = 1}
+	}
+
+	--Nova_Frame CVar Registration
+	for i=1,#Nova_ValueCheck do
+		if GetCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_ValueCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)) == nil then
+			RegisterCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_ValueCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;), Nova_ValueCheck[i].Var1)
+		end
+		if GetCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_ValueCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)..&amp;quot;_Enabled&amp;quot;) == nil then
+			RegisterCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_ValueCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)..&amp;quot;_Enabled&amp;quot;, Nova_ValueCheck[i].Var2)
+		end
+	end
+	for i=1,#Nova_CooldownCheck do
+		if GetCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_CooldownCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)) == nil then
+			RegisterCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_CooldownCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;), Nova_CooldownCheck[i].Mod)
+		end
+		if GetCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_CooldownCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)..&amp;quot;_Enabled&amp;quot;) == nil then
+			RegisterCVar(&amp;quot;Nova_&amp;quot;..string.gsub(Nova_CooldownCheck[i].Text,&amp;quot;%s&amp;quot;,&amp;quot;_&amp;quot;)..&amp;quot;_Enabled&amp;quot;, Nova_CooldownCheck[i].Var1)
+		end
+	end
+	
+	---Load Data Files
+	if PQR_LoadLua ~= nil then
+		if PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) == false then
+			PQR_WriteToChat(&amp;quot;You are missing PQR_Nova_Data.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
+			PQR_StopRotation()
+			return true
+		end
+	end
+
+	if PQR_LoadLua(&amp;quot;PQR_Nova_Frame.lua&amp;quot;) == true then
+			if not mmC then
+			MiniMapCreation()
+			end
+			-- Slash Commands
+			SLASH_NOVAFRAME1 = &amp;quot;/novaframe&amp;quot;
+			SLASH_NOVAFRAME2 = &amp;quot;/nova&amp;quot;
+			function SlashCmdList.NOVAFRAME(msg, editbox)
+				if Setup == nil then
+					Setup = true
+					FrameCreation(Nova_ValueCheck, Nova_CooldownCheck, &amp;quot;Survival Hunter Options&amp;quot;, &amp;quot;Survival Cooldown Settings&amp;quot;)
+				end
+				if not Nova_Frame:IsShown() then Nova_Frame:Show() else Nova_Frame:Hide() end
+			end
+		end
+	
+	--Shoutouts
+	PQR_WriteToChat(&amp;quot;|cffABD473Survival Hunter:|cffFFBE69  Rotation Loaded Successfully&amp;quot;)
+	PQR_WriteToChat(&amp;quot;|cffFFBE69Special Thanks to My Donators and |cffFFFFFFOwnedCore.com&amp;quot;)
+end
+
+----------------------
+--Cvar Value Variables
+----------------------
+
+--Enables
+AutoAspect		= GetCVarBool(&amp;quot;Nova_Enable_Auto_Aspect_Enabled&amp;quot;)
+AutoCooldowns	= GetCVarBool(&amp;quot;Nova_Auto_Use_Cooldowns_Enabled&amp;quot;)
+AutoPot			= GetCVarBool(&amp;quot;Nova_Use_Agility_Pot_on_Lust_Enabled&amp;quot;)
+EnableCleave	= GetCVarBool(&amp;quot;Nova_Enable_Cleave_Shots_Enabled&amp;quot;)
+EnableMisdir	= GetCVarBool(&amp;quot;Nova_Enable_Misdirection_Enabled&amp;quot;)
+EnableTranq		= GetCVarBool(&amp;quot;Nova_Use_Tranq_Shot_Enabled&amp;quot;)
+EnableWidow		= GetCVarBool(&amp;quot;Nova_Use_Widows_Venom_Enabled&amp;quot;)
+EnableMend		= GetCVarBool(&amp;quot;Nova_Enable_Mend_Pet_Enabled&amp;quot;)
+AutoStone		= GetCVarBool(&amp;quot;Nova_Use_Healthstone_Enabled&amp;quot;)
+EnableFreez		= GetCVarBool(&amp;quot;Nova_Freeze_Trap_Enabled&amp;quot;)
+EnableIceT		= GetCVarBool(&amp;quot;Nova_Ice_Trap_Enabled&amp;quot;)
+
+--Values 
+ArcaneFocus		= tonumber(GetCVar(&amp;quot;Nova_Arcane_Shot_Min_Focus&amp;quot;))
+MendHP			= tonumber(GetCVar(&amp;quot;Nova_Mend_Pet_Health%&amp;quot;))
+StoneHP			= tonumber(GetCVar(&amp;quot;Nova_Health%_for_Healthstone&amp;quot;))
+
+--CVar Cooldown Variables
+nMod_ForceCD	= tonumber(GetCVar(&amp;quot;Nova_Force_Cooldowns&amp;quot;))
+nMod_AoE		= tonumber(GetCVar(&amp;quot;Nova_Area_of_Effect&amp;quot;))
+nMod_Pause		= tonumber(GetCVar(&amp;quot;Nova_Pause_Rotation&amp;quot;))
+nMod_Recall		= tonumber(GetCVar(&amp;quot;Nova_Recall_Pet/Clear_Target&amp;quot;))
+nMod_Expl		= tonumber(GetCVar(&amp;quot;Nova_Explosive_Trap&amp;quot;))
+nMod_Freez		= tonumber(GetCVar(&amp;quot;Nova_Freezing_Trap&amp;quot;))
+
+--Set MiniMap to true
+mmC = 1
+
+--PQR Variables
+PQR_SpellAvailableTime	= Nova_SpellAvailableTime()
+PQR_ResetMovementTime	= 1</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--Routines</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>----------
+--Routines
+----------
+
+--Feign Death
+if UnitBuffID(&amp;quot;player&amp;quot;, 5384) then
+	StopAttack()
+	SpellStopCasting()
+	ClearTarget()
+	return true
+end
+
+--Pause
+local nMod_Pause = nMod_Pause
+
+if Nova_Mod() == nMod_Pause
+	or IsMounted()
+	or UnitBuffID(&amp;quot;player&amp;quot;, 104235)
+	or UnitBuffID(&amp;quot;player&amp;quot;, 104262)
+	or SpellIsTargeting()
+	or UnitIsDeadOrGhost(&amp;quot;target&amp;quot;) 
+	or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;)
+	or UnitBuffID(&amp;quot;player&amp;quot;, 41350)
+then
+	return true
+end
+
+--Aspect Switching
+local AutoAspect = AutoAspect
+
+if AutoAspect == 1 then
+	if not UnitAffectingCombat(&amp;quot;player&amp;quot;)
+		and not IsMounted()
+		and PQR_IsMoving(math.random(1,9))
+		and not UnitIsDeadOrGhost(&amp;quot;player&amp;quot;)
+		and GetShapeshiftForm() ~= 2
+	then
+		CastShapeshiftForm(2)
+	elseif UnitAffectingCombat(&amp;quot;player&amp;quot;)
+		and GetShapeshiftForm() == 2
+	then
+		CastShapeshiftForm(1)
+	end
+end
+
+--recall
+local nMod_Recall = nMod_Recall
+if Nova_Mod() == nMod_Recall then
+	SpellStopCasting()
+	PetFollow()
+	ClearTarget()
+end
+
+--Healthstone
+local StoneHP, AutoStone = StoneHP, AutoStone
+
+if AutoStone == 1
+	and select(1, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; StoneHP
+	and GetItemCount(5512) == 1 
+	and select(3,GetItemCooldown(5512)) == 1
+	and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+then 
+	UseItemByName(5512)
+end
+
+---Use Agi Potion
+if PQ_HasHero()
+	and GetItemCount(76089) &amp;gt;= 1 
+	and select(2, GetItemCooldown(76089)) == 0
+	and AutoPot == 1
+	and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+then
+	UseItemByName(76089)
+end
+	
+--Racials
+Nova_Racial()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Utility - Widow</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Widow, TargetValidation, EnableWidow = PQ_Widow, TargetValidation, EnableWidow
+local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Widow)
+	and not UnitDebuffID(&amp;quot;target&amp;quot;,PQ_Widow)
+	and EnableWidow == 1 
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Widow),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Utility - Tranq</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local EnableTranq, TargetValidation = EnableTranq, TargetValidation
+local PlayerFocus = select(4, Nova_UnitInfo(&amp;quot;player&amp;quot;))
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Tranq)
+	and PlayerCombat
+	and EnableTranq == 1
+then
+	for i = 1, 40 do
+		local buff = { UnitBuff(&amp;quot;target&amp;quot;, i) }
+		if buff[9]
+			and PlayerFocus &amp;gt; 20
+		then
+			CastSpellByName(GetSpellInfo(PQ_Tranq), &amp;quot;target&amp;quot;)
+			return true
+		end
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Utility - Misdirection</Name><Default>false</Default><SpellID>34477</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation, EnableMisdir = TargetValidation, EnableMisdir
+local cThreat = UnitThreatSituation(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if PlayerCombat
+	and EnableMisdir == 1
+then
+	---Set Target for misdirection
+	if UnitExists(&amp;quot;focus&amp;quot;)
+		and not UnitIsDeadOrGhost(&amp;quot;focus&amp;quot;)
+		and PQR_IsOutOfSight(&amp;quot;focus&amp;quot;) == false
+	then
+		PQR_CustomTarget = &amp;quot;focus&amp;quot;
+	elseif UnitExists(&amp;quot;pet&amp;quot;)
+		and not UnitIsDeadOrGhost(&amp;quot;pet&amp;quot;)
+		and PQR_IsOutOfSight(&amp;quot;pet&amp;quot;) == false
+	then
+		PQR_CustomTarget = &amp;quot;pet&amp;quot;
+	else
+		PQR_CustomTarget = &amp;quot;player&amp;quot;
+	end
+
+	---Cast Misdirection
+	if cThreat == nil or PQR_CustomTarget == &amp;quot;player&amp;quot; then
+		return false
+	elseif cThreat &amp;gt;= 1
+		and PQR_SpellAvailable(PQ_MisDir)
+	then	
+		return true
+	end
+end</Lua><RecastDelay>2000</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Utility - Mend Pet</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local MendHP, EnableMend = MendHP, EnableMend
+
+if EnableMend == 1 then
+	if UnitExists(&amp;quot;pet&amp;quot;)
+		and select(1, Nova_UnitInfo(&amp;quot;pet&amp;quot;)) &amp;lt; MendHP
+		and not UnitIsDeadOrGhost(&amp;quot;pet&amp;quot;)
+		and PQR_IsOutOfSight(&amp;quot;pet&amp;quot;) == false 
+		and not UnitBuffID(&amp;quot;pet&amp;quot;, PQ_Mend)
+		and PQR_SpellAvailable(PQ_Mend)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Mend))
+		return true
+	end
+end</Lua><RecastDelay>2000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Utility - Traps</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Nova_trap()
+
+local PQ_Exp, PQ_Fre, PQ_sNak, PQ_Barrow, PQ_iCe = PQ_Exp, PQ_Fre, PQ_sNak, PQ_Barrow, PQ_iCe
+local nMod_Expl, nMod_Freez, EnableFreez, EnableIceT = nMod_Expl, nMod_Freez, EnableFreez, EnableIceT
+local PQ_tSpell = 0
+local PQ_tSpelltwo = 0
+
+if not PQR_SpellAvailable(PQ_Exp)
+	or not PQR_SpellAvailable(PQ_Barrow)
+then
+	PQ_tSpell = PQ_sNak
+else
+	PQ_tSpell = PQ_Exp
+end
+
+--Explosive Trap/Snake Trap
+if Nova_Mod() == nMod_Expl then
+	CastSpellByName(tostring(GetSpellInfo(PQ_tSpell)))
+	if SpellIsTargeting() then 
+		CameraOrSelectOrMoveStart()
+		CameraOrSelectOrMoveStop()
+	end
+	return true
+end
+
+if EnableFreez == 1 then
+	PQ_tSpelltwo = PQ_Fre
+elseif EnableIceT == 1 then
+	PQ_tSpelltwo = PQ_iCe
+elseif EnableFreez == 0 or EnableIceT == 0 then
+	PQ_tSpelltwo = PQ_Fre
+end
+
+--Freezing Trap/Ice Trap
+if Nova_Mod() == nMod_Freez then
+	CastSpellByName(tostring(GetSpellInfo(PQ_tSpelltwo)))
+	if SpellIsTargeting() then 
+		CameraOrSelectOrMoveStart()
+		CameraOrSelectOrMoveStop()
+	end
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Talent - Tier 6</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation, EnableCleave, PQ_ActiveTierSix = TargetValidation, EnableCleave, 0
+local TierSixIDs = { PQ_Barrage, PQ_Power, PQ_Toss }
+
+if UnitLevel(&amp;quot;player&amp;quot;) &amp;gt;= 90 then 
+	for i= 1, #TierSixIDs do
+		if IsPlayerSpell(TierSixIDs[i]) == true then
+			PQ_ActiveTierSix = TierSixIDs[i]
+		end
+	end
+
+	if TargetValidation(&amp;quot;target&amp;quot;, PQ_ActiveTierSix)
+		and EnableCleave == 1
+		and PlayerCombat
+	then
+		CastSpellByName(GetSpellInfo(PQ_ActiveTierSix),&amp;quot;target&amp;quot;)
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Talent - Tier 5</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation, PQ_ActiveTierFive = TargetValidation, 0
+local TierFiveIDs = { PQ_Lynx, PQ_Blink, PQ_AMOC }
+local nMod_ForceCD, AutoCooldowns = nMod_ForceCD, AutoCooldowns
+
+if UnitLevel(&amp;quot;player&amp;quot;) &amp;gt;= 75 then
+	for i= 1, #TierFiveIDs do
+		if IsPlayerSpell(TierFiveIDs[i]) == true then
+			PQ_ActiveTierFive = TierFiveIDs[i]
+		end
+	end
+
+	if Nova_Mod() == nMod_ForceCD
+		or ( AutoCooldowns == 1 and SpecialUnit() )
+	then
+		if TargetValidation(&amp;quot;target&amp;quot;, PQ_ActiveTierFive)
+			and PlayerCombat
+			and not UnitDebuffID(&amp;quot;target&amp;quot;, PQ_AMOC, &amp;quot;PLAYER&amp;quot;)
+			and not UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Lynx, &amp;quot;PLAYER&amp;quot;)
+		then
+			CastSpellByName(GetSpellInfo(PQ_ActiveTierFive),&amp;quot;target&amp;quot;)
+			return true
+		end
+	end
+else
+	return false
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Talent - Tier 4</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation, PQ_ActiveTierFour = TargetValidation, 0
+local TierFourIDs = { PQ_Dire, PQ_Fervor }
+local nMod_ForceCD, AutoCooldowns = nMod_ForceCD, AutoCooldowns
+
+if UnitLevel(&amp;quot;player&amp;quot;) &amp;gt;= 60 then
+	for i= 1, #TierFourIDs do
+		if IsPlayerSpell(TierFourIDs[i]) == true then
+			PQ_ActiveTierFour = TierFourIDs[i]
+		end
+	end
+
+	if PQ_ActiveTierFour == PQ_Dire then
+		if TargetValidation(&amp;quot;target&amp;quot;, PQ_ActiveTierFour)
+			and PlayerCombat
+		then
+			CastSpellByName(GetSpellInfo(PQ_ActiveTierFour),&amp;quot;target&amp;quot;)
+			return true
+		end
+	elseif PQ_ActiveTierFour == PQ_Fervor then
+		if select(4, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt;= 40
+			and not UnitBuffID(&amp;quot;player&amp;quot;, PQ_Fervor)
+			and PlayerCombat
+		then
+			SpellCancelQueuedSpell()
+			CastSpellByName(GetSpellInfo(PQ_Fervor))
+			return true
+		end
+	else
+		return false
+	end
+else
+	return false
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Sting - Serpent</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Sting
+local PQ_Serpent, PQ_Cobra = PQ_Serpent, PQ_Cobra
+local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local ssdot = select(7, UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Serpent, &amp;quot;PLAYER&amp;quot;))
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Serpent)
+	and not ssdot
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Serpent),&amp;quot;target&amp;quot;)
+	return true
+end
+	
+--Sting Refresh
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Serpent)
+	and ssdot
+	and ssdot - GetTime() &amp;lt; 6
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Cobra),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - Kill</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Kill = PQ_Kill
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Kill)
+	and  select(1, Nova_UnitInfo(&amp;quot;target&amp;quot;)) &amp;lt;= 20
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Kill),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - Explosive</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Expl = PQ_Expl
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Expl)
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Expl),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - Cobra</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Cobra = PQ_Cobra
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Cobra)
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Cobra),&amp;quot;target&amp;quot;) 
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - Black Arrow</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Barrow = PQ_Barrow
+local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Barrow)
+	and not UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Barrow, &amp;quot;PLAYER&amp;quot;)
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Barrow),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - Arcane</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local PlayerFocus = select(4, Nova_UnitInfo(&amp;quot;player&amp;quot;))
+local TargetValidation = TargetValidation
+local PQ_Arcane, PQ_Trill = PQ_Arcane, PQ_Trill
+local ArcaneFocus = ArcaneFocus
+
+if TargetValidation(&amp;quot;target&amp;quot;, PQ_Arcane)
+	and ( PlayerFocus &amp;gt;= ArcaneFocus or UnitBuffID(&amp;quot;player&amp;quot;, PQ_Trill) )
+	and PlayerCombat
+then
+	CastSpellByName(GetSpellInfo(PQ_Arcane),&amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mark - Hunters</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Mark = PQ_Mark
+local nMod_AoE = nMod_AoE
+local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+
+if not PlayerCombat 
+	and Nova_Mod() ~= nMod_AoE
+then
+	if TargetValidation(&amp;quot;target&amp;quot;, PQ_Mark)
+		and not UnitDebuffID(&amp;quot;target&amp;quot;, PQ_Mark)
+		and not UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Mark),&amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>CD - Stampede</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Stamp, PQ_Rapid = PQ_Stamp, PQ_Rapid
+local nMod_ForceCD, AutoCooldowns = nMod_ForceCD, AutoCooldowns
+
+if Nova_Mod() == nMod_ForceCD
+	or ( AutoCooldowns == 1 and SpecialUnit() )
+then
+	if PQR_SpellAvailable(PQ_Stamp)
+		and ( UnitBuffID(&amp;quot;player&amp;quot;, PQ_Rapid) or PQ_HasHero() )
+		and UnitExists(&amp;quot;pet&amp;quot;)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Stamp))
+		return true
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>CD - Readiness</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Ready, PQ_Rapid = PQ_Ready, PQ_Rapid
+local nMod_ForceCD, AutoCooldowns = nMod_ForceCD, AutoCooldowns
+
+if Nova_Mod() == nMod_ForceCD
+	or ( AutoCooldowns == 1 and SpecialUnit() )
+then
+	if select(2,GetSpellCooldown(PQ_Rapid)) &amp;gt; 2
+		and PQR_SpellAvailable(PQ_Ready)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Ready))
+		return true
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>CD - Rapid Fire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local TargetValidation = TargetValidation
+local PQ_Rapid = PQ_Rapid
+local nMod_ForceCD, AutoCooldowns = nMod_ForceCD, AutoCooldowns
+
+if Nova_Mod() == nMod_ForceCD
+	or ( AutoCooldowns == 1 and SpecialUnit() )
+then
+	if PQR_SpellAvailable(PQ_Rapid)
+		and not UnitBuffID(&amp;quot;player&amp;quot;, PQ_Rapid)
+		and PQ_HasHero() == false
+		and PlayerCombat
+	then
+		if GetInventoryItemCooldown(&amp;quot;player&amp;quot;, 13) == 0 then
+			UseInventoryItem(13)
+		end
+		CastSpellByName(GetSpellInfo(PQ_Rapid))
+		return true
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shot - AoE</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCombat = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+local nMod_AoE = nMod_AoE
+local TargetValidation = TargetValidation
+local PQ_Toss, PQ_Multi, PQ_Cobra = PQ_Toss, PQ_Multi, PQ_Cobra
+
+if PlayerCombat
+	and Nova_Mod() == nMod_AoE
+then
+	if not UnitExists(&amp;quot;target&amp;quot;) then TargetNearestEnemy() end
+	--Glaive toss
+	if TargetValidation(&amp;quot;target&amp;quot;, PQ_Toss)
+		and IsPlayerSpell(PQ_Toss)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Toss), &amp;quot;target&amp;quot;)
+		return true
+	--Mutli Shot
+	elseif TargetValidation(&amp;quot;target&amp;quot;, PQ_Multi)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Multi), &amp;quot;target&amp;quot;)
+		return true	
+	--cobra shot
+	elseif TargetValidation(&amp;quot;target&amp;quot;, PQ_Cobra)
+	then
+		CastSpellByName(GetSpellInfo(PQ_Cobra), &amp;quot;target&amp;quot;) 
+		return true
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></HUNTER>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?><INTERRUPT><Ability><Name>--Tamer--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Code By Crystal_tech
+---Enter the Name of the pet you want to tame/camp inside the qoutes
+local mobuwanttamed = &amp;quot;ENTERNAMEHERE&amp;quot;
+--How often you want to update the scan in secs
+local intChecks = 5
+
+if tamertime == nil then
+	tamertime = GetTime()
+end
+
+if GetTime() - tamertime &amp;gt; intChecks and not UnitExists(&amp;quot;target&amp;quot;) then
+	tamertime = GetTime()
+	TargetUnit(mobuwanttamed)
+	PQR_WriteToChat(&amp;quot;Looking for Tamable Mob...&amp;quot;)
+end
+
+if UnitExists(&amp;quot;target&amp;quot;) and UnitName(&amp;quot;target&amp;quot;) == mobuwanttamed and not IsMounted() then
+	if not UnitDebuffID(&amp;quot;target&amp;quot;, 1130) then
+		CastSpellByName(GetSpellInfo(1515),target)
+	end
+	CastSpellByName(GetSpellInfo(1515),target)
+	PQR_WriteToChat(&amp;quot;Found it!&amp;quot;)
+end
+
+if UnitExists(&amp;quot;pet&amp;quot;) then
+	PQR_WriteToChat(&amp;quot;Tamed!&amp;quot;)
+	PQR_StopRotation()
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></INTERRUPT>

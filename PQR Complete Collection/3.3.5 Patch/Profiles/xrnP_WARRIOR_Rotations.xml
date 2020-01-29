@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Rotation><RotationName>Protection PvE [5/2/34]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- defensive spells ---|Vigilance|Commanding/Battle Shout|Shield Block|Enraged Regeneration|--- offensive spells ---|USE: Gloves|Heroic Throw|Concussion Blow|Victory Rush|Inner Rage|Heroic Strike / Cleave|Shockwave|Thunder Clap|Shield Slam|Revenge|Rend|Demoralizing Shout|Devastate</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#LGZ0bZffGzRRodru
+
+-- Hotkeys
+Hold down ALT pause rotation
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Useful spells not included in the rotation
+Shield Wall, Last Stand, Charge, Intervenne, Heroic Leap
+
+-- Behaviour
+Enraged Regeneration is activated when you use Last Stand.
+Vigilance is cast on party/raid member with hightest hp.
+Rotation is paused when another player flagged as TANK is tanking your target.
+</RotationNotes></Rotation></WARRIOR>

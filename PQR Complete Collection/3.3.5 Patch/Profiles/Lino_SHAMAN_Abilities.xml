@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions></Actions><Lua>local FS, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if target ~= nil then
+	if FS ~= nil then
+		if timer - GetTime() &amp;lt; 3 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lava Burst</Name><Default>false</Default><SpellID>51505</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lightning Bolt</Name><Default>false</Default><SpellID>403</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Earth Shock</Name><Default>false</Default><SpellID>8042</SpellID><Actions></Actions><Lua>local _,_,_,LightningShieldCount = UnitBuffID(&amp;quot;player&amp;quot;, 324)
+
+
+if LightningShieldCount ~= nil then
+    if LightningShieldCount &amp;gt;= 5 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Searing Totem</Name><Default>false</Default><SpellID>3599</SpellID><Actions></Actions><Lua>local _,_,_,ls = UnitBuffID(&amp;quot;player&amp;quot;, 77747)
+
+if ls == nil then
+return true
+else
+return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flametongue Weapon</Name><Default>false</Default><SpellID>8024</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>300000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Call of the spirits</Name><Default>false</Default><SpellID>66844</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>300000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lightning Shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>local _,_,_,ls = UnitBuffID(&amp;quot;player&amp;quot;, 324)
+
+if ls == nil then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Thunderstorm</Name><Default>false</Default><SpellID>51490</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flame Shock (focus)</Name><Default>false</Default><SpellID>8050</SpellID><Actions></Actions><Lua>local FS, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 8050, &amp;quot;PLAYER&amp;quot;)
+local focus = UnitExists(&amp;quot;focus&amp;quot;)
+
+if focus ~= nil then
+	if FS ~= nil then
+		if timer - GetTime() &amp;lt; 3 then
+			return true
+		else
+			return false
+		end
+	else
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental Mastery</Name><Default>false</Default><SpellID>16166</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></SHAMAN>

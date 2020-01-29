@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>Shadow PvP</RotationName><RotationDefault>false</RotationDefault><RotationList>ShadowPvP: Focus/Pause|ShadowPvP: Shadowform|ShadowPvP: NoDismount|ShadowPvP: Dispell|ShadowPvP: Fade|ShadowPvP: PWF|ShadowPvP: VE|ShadowPvP: IF|ShadowPvP: SP|ShadowPvP: Renew|ShadowPvP: Flash Heal|ShadowPvP: Enemy|ShadowPvP: PWS|ShadowPvP: PS|ShadowPvP: PH|ShadowPvP: Dispersion|ShadowPvP: Check ShadowForm|ShadowPvP: Archangel|ShadowPvP: SWD|ShadowPvP: MB (DA)|ShadowPvP: Mind Spike|ShadowPvP: SWP|ShadowPvP: SWP(Focus)|ShadowPvP: DP|ShadowPvP: Shadowfiend|ShadowPvP: Mind Blast|ShadowPvP: SWD (20%)|ShadowPvP: VT|ShadowPvP: VT (Focus)|ShadowPvP: Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>*Notes*
+
+-)Hold Left Shift - Focus Mouseover Target
+--&amp;gt;Will auto cast Vampiric Touch and Shadow Word: Pain on focus
+-)Shadowform is always on by default
+-)Will auto cast Fade on movement impairing effects currently in the debuff list
+-)Will auto cast Dispell on target with certain deadly Magic Buffs
+-)Will auto Psychic Scream anyone in melee range
+-)Will auto Psychic Horror targets with certain preconfigured Buffs</RotationNotes></Rotation><Rotation><RotationName>Shadow Arena</RotationName><RotationDefault>false</RotationDefault><RotationList>ShadowPvP: Focus|ShadowArena: Shadowform|ShadowPvP: Cancel ShadowForm|ShadowPvP: NoDismount|ShadowPvP: Dispell|ShadowPvP: Fade|ShadowPvP: PWF|ShadowPvP: VE|ShadowPvP: IF|ShadowPvP: SP|ShadowPvP: Renew|ShadowPvP: Flash Heal|ShadowPvP: Enemy|ShadowPvP: PWS|ShadowPvP: PS|ShadowPvP: PH|ShadowPvP: Dispersion|ShadowPvP: Check ShadowForm|ShadowPvP: Archangel|ShadowPvP: SWD|ShadowPvP: MB (DA)|ShadowPvP: Mind Spike|ShadowPvP: SWP|ShadowPvP: SWP(Focus)|ShadowPvP: DP|ShadowPvP: Shadowfiend|ShadowPvP: Mind Blast|ShadowPvP: SWD (20%)|ShadowPvP: VT|ShadowPvP: VT (Focus)|ShadowPvP: Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>*Notes*
+
+-)Hold Left Shift - Focus Mouseover Target
+--&amp;gt;Will auto cast Vampiric Touch and Shadow Word: Pain on focus
+-)Hold Left Control - Leave Shadowform
+-)Hold Left Alt - Enter Shadowform
+-)Will auto cast Fade on movement impairing effects currently in the debuff list
+-)Will auto cast Dispell on target with certain deadly Magic Buffs
+-)Will auto Psychic Scream anyone in melee range
+-)Will auto Psychic Horror targets with certain preconfigured Buffs</RotationNotes></Rotation></PRIEST>

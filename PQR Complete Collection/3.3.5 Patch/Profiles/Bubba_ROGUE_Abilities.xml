@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?><ROGUE><Ability><Name>Pick Lock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local name,_,_,_,_,enchant = GetTradeTargetItemInfo(7)
+
+if name and string.find(name,&amp;quot;Lockbox&amp;quot;) then
+
+if enchant then
+  AcceptTrade()
+else
+  CastSpellByID(1804)
+  ClickTargetTradeButton(7)
+end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Evasion</Name><Default>false</Default><SpellID>5277</SpellID><Actions></Actions><Lua>local myhealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myhealth &amp;lt;= 50 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Shadowstep</Name><Default>false</Default><SpellID>36554</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) ~= 1 and IsStealthed() and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+	if GetSpellCooldown(14183) == 0 then
+		CastSpellByID(14183, &amp;quot;target&amp;quot;)
+		return true
+	else
+		return true
+	end
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Ambush</Name><Default>false</Default><SpellID>8676</SpellID><Actions></Actions><Lua>local inRange = IsSpellInRange(&amp;quot;Ambush&amp;quot;, &amp;quot;target&amp;quot;)
+local SD = UnitBuffID(&amp;quot;player&amp;quot;, 51713)
+
+if UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) and (IsStealthed() or SD ~= nil) and inRange == 1 then
+	if GetSpellCooldown(14183) == 0 then
+		CastSpellByID(14183, &amp;quot;target&amp;quot;)
+		return true
+	else
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Sinister Strike</Name><Default>false</Default><SpellID>1752</SpellID><Actions></Actions><Lua>if enemy then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local targetHealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if (CP == 5 or UnitHealth(&amp;quot;target&amp;quot;) &amp;lt; UnitHealthMax(&amp;quot;player&amp;quot;)/2 ) or (targetHealth &amp;lt; 20 and CP &amp;gt;=  2) and enemy then 		return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Declares</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>enemy = UnitIsEnemy(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if (UnitExists(&amp;quot;target&amp;quot;) == nil or UnitIsDead(&amp;quot;target&amp;quot;) or UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Sap</Name><Default>false</Default><SpellID>6770</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local Recup = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+
+if myHealth &amp;lt; 70 and GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) &amp;gt;= 2 and enemy then 
+	return true 
+elseif Recup == nil and CP &amp;gt;= 2 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Apply Poisons</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if applypoison and GetTime() - applypoison &amp;gt; 3 then applypoison = nil end
+if UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil and applypoison == nil then
+
+local _,poisonMH,_,_,poisonOH,_,_,poisonTR = GetWeaponEnchantInfo()
+applypoison = GetTime()
+
+if poisonMH == nil then 
+  UseItemByName(&amp;quot;Instant Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(16) end
+elseif poisonOH == nil then
+  UseItemByName(&amp;quot;Deadly Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(17) end
+elseif poisonTR == nil then
+  UseItemByName(&amp;quot;Wound Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(18) end
+end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Stealth</Name><Default>false</Default><SpellID>1784</SpellID><Actions></Actions><Lua>if IsStealthed() == nil and GetSpellCooldown(1784) == 0 and UnitExists(&amp;quot;target&amp;quot;) and UnitIsDead(&amp;quot;target&amp;quot;) == nil and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) and IsMounted() == nil then
+	return true
+end</Lua><RecastDelay>4000</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Slice and Dice</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if sliceanddicetimer == nil and GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) &amp;gt;= 2 then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bot: Stealth</Name><Default>false</Default><SpellID>1784</SpellID><Actions></Actions><Lua>if IsStealthed() == nil and IsMounted() == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Hemorrhage</Name><Default>false</Default><SpellID>16511</SpellID><Actions></Actions><Lua>local inRange = IsSpellInRange(&amp;quot;Hemorrhage&amp;quot;, &amp;quot;target&amp;quot;)
+
+if inRange == 1 and attack then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Dismantle</Name><Default>false</Default><SpellID>51772</SpellID><Actions></Actions><Lua>local AW = UnitBuffID(&amp;quot;target&amp;quot;, 31884)
+local UF = UnitBuffID(&amp;quot;target&amp;quot;, 49016)
+local B = UnitBuffID(&amp;quot;target&amp;quot;, 18499)
+local BL = UnitBuffID(&amp;quot;target&amp;quot;, 2825)
+local H = UnitBuffID(&amp;quot;target&amp;quot;, 32182)
+local SD = UnitBuffID(&amp;quot;target&amp;quot;, 51713)
+local PoF = UnitBuffID(&amp;quot;target&amp;quot;, 51271)
+local BF1 = UnitBuffID(&amp;quot;target&amp;quot;, 33702)
+local BF2 = UnitBuffID(&amp;quot;target&amp;quot;, 20572)
+local BF3 = UnitBuffID(&amp;quot;target&amp;quot;, 33697)
+local CoV = UnitBuffID(&amp;quot;target&amp;quot;, 99740)
+local R = UnitBuffID(&amp;quot;target&amp;quot;, 1719)
+local BS = UnitBuffID(&amp;quot;target&amp;quot;, 46924)
+
+if  AW ~= nil or UF ~= nil or B ~= nil or BL ~= nil or H ~= nil or SD ~= nil or PoF ~= nil or BF1 ~= nil or BF2 ~= nil or BF3~= nil or CoV ~= nil or R ~= nil or BS ~= nil then
+	return true
+elseif IsLeftControlKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Backstab</Name><Default>false</Default><SpellID>53</SpellID><Actions></Actions><Lua>local Hem = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
+
+if PQR_NotBehindTarget() == false and Hem ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Premeditation</Name><Default>false</Default><SpellID>14183</SpellID><Actions></Actions><Lua>if CP == 0 and IsStealthed() then
+	return true
+end</Lua><RecastDelay>1000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Kidney Shot</Name><Default>false</Default><SpellID>408</SpellID><Actions></Actions><Lua>local Recup = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+local CS = UnitDebuffID(&amp;quot;target&amp;quot;, 1833)
+
+if Recup ~= nil and CP &amp;gt;= 2 and CS == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Mutilate</Name><Default>false</Default><SpellID>1329</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Cheap Shot</Name><Default>false</Default><SpellID>1833</SpellID><Actions></Actions><Lua>local inRange = IsSpellInRange(&amp;quot;Cheap Shot&amp;quot;, &amp;quot;player&amp;quot;)
+
+if UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) and IsStealthed() and inRange == 1 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if CP &amp;gt;= 2 then 
+	return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Recuperate</Name><Default>false</Default><SpellID>1329</SpellID><Actions></Actions><Lua>local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myHealth &amp;lt; 70 and GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) &amp;gt;= 2 and enemy then 
+	return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Kidney Shot</Name><Default>false</Default><SpellID>1329</SpellID><Actions></Actions><Lua>local CS = UnitDebuffID(&amp;quot;target&amp;quot;, 1833)
+local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if CP &amp;gt;= 3 and CS == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ass: Apply Poisons</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if applypoison and GetTime() - applypoison &amp;gt; 3 then applypoison = nil end
+if UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil and applypoison == nil then
+
+local _,poisonMH,_,_,poisonOH,_,_,poisonTR = GetWeaponEnchantInfo()
+applypoison = GetTime()
+
+if poisonMH == nil then 
+  UseItemByName(&amp;quot;Instant Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(16) end
+elseif poisonOH == nil then
+  UseItemByName(&amp;quot;Deadly Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(17) end
+elseif poisonTR == nil then
+  UseItemByName(&amp;quot;Wound Poison&amp;quot;,&amp;quot;player&amp;quot;) 
+  if SpellIsTargeting() then PickupInventoryItem(18) end
+end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bot: Cheap Shot</Name><Default>false</Default><SpellID>1833</SpellID><Actions></Actions><Lua>local inRange = IsSpellInRange(&amp;quot;Cheap Shot&amp;quot;, &amp;quot;target&amp;quot;)
+local SD = UnitBuffID(&amp;quot;player&amp;quot;, 51713)
+local Garrote = UnitDebuffID(&amp;quot;target&amp;quot;, 703)
+local CS = UnitDebuffID(&amp;quot;target&amp;quot;, 1833)
+
+if UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) and (IsStealthed() or SD ~= nil) and inRange == 1 and PQR_NotBehindTarget() then
+	if CS == nil and Garrote == nil then
+		if GetSpellCooldown(14183) == 0 then
+			CastSpellByID(14183, &amp;quot;target&amp;quot;)
+			return true
+		else
+			return true
+		end
+	end
+elseif UnitIsPVP(&amp;quot;target&amp;quot;) and (IsStealthed() or SD ~= nil) and inRange == 1 then
+	if CS == nil and Garrote == nil then
+		if GetSpellCooldown(14183) == 0 then
+			CastSpellByID(14183, &amp;quot;target&amp;quot;)
+			return true
+		else
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Arcane Torrent</Name><Default>false</Default><SpellID>25046</SpellID><Actions></Actions><Lua>local BE = UnitRace(&amp;quot;player&amp;quot;)
+
+if BE == &amp;quot;Blood Elf&amp;quot; and GetSpellCooldown(25046) == 0 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Gouge</Name><Default>false</Default><SpellID>1776</SpellID><Actions>/cleartarget</Actions><Lua>if IsLeftAltKeyDown() then
+	return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bot: Garrote</Name><Default>false</Default><SpellID>703</SpellID><Actions></Actions><Lua>local inRange = IsSpellInRange(&amp;quot;Cheap Shot&amp;quot;, &amp;quot;target&amp;quot;)
+local SD = UnitBuffID(&amp;quot;player&amp;quot;, 51713)
+local Garrote = UnitDebuffID(&amp;quot;target&amp;quot;, 703)
+local CS = UnitDebuffID(&amp;quot;target&amp;quot;, 1833)
+local targetMana = UnitPower(&amp;quot;target&amp;quot;)
+
+
+if UnitIsPVP(&amp;quot;target&amp;quot;) and (IsStealthed() or SD ~= nil) and inRange == 1 and PQR_NotBehindTarget() == false then
+	if CS == nil and Garrote == nil and targetMana &amp;gt; 7000  then
+		if GetSpellCooldown(14183) == 0 then
+			CastSpellByID(14183, &amp;quot;target&amp;quot;)
+			return true
+		else
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Blind</Name><Default>false</Default><SpellID>2094</SpellID><Actions></Actions><Lua>local hasFocus = UnitExists(&amp;quot;focus&amp;quot;)
+local Blinded = UnitDebuffID(&amp;quot;focus&amp;quot;, 2094)
+
+if IsRightShiftKeyDown() and GetCurrentKeyBoardFocus() == nil then
+	if hasFocus and Blinded == nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Shiv</Name><Default>false</Default><SpellID>5983</SpellID><Actions></Actions><Lua>local buff = { 52610, 5229, 18499, 12292, 76691, 49016, 48393 }
+local havebuff = nil
+
+for i,v in ipairs(buff) do
+ if UnitBuffID(&amp;quot;target&amp;quot;,v) then havebuff = 1 end
+end
+
+if havebuff then return true  end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></ROGUE>

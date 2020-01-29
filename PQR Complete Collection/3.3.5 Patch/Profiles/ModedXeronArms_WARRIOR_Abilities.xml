@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>USE: Gloves</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,10) == 0 then UseInventoryItem(10) end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13) == 0 then UseInventoryItem(13) end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14) == 0 then UseInventoryItem(14) end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Gloves</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) and UnitIsDead(&amp;quot;target&amp;quot;) == nil and UnitAffectingCombat(&amp;quot;target&amp;quot;) and SpellIsTargeting() == nil then
+
+if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,10) == 0 then UseInventoryItem(10) end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Battle Shout</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 20 then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Commanding Shout</Name><Default>false</Default><SpellID>469</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;target&amp;quot;) and UnitBuffID(&amp;quot;player&amp;quot;, 79105) == nil and UnitBuffID(&amp;quot;player&amp;quot;, 6307) == nil and UnitBuffID(&amp;quot;player&amp;quot;, 90364) == nil then
+  return true
+end</Lua><RecastDelay>60000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Cleave</Name><Default>false</Default><SpellID>845</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;gt;= 65 then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Heroic Strike</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+if rage &amp;gt;= 90 or UnitBuffID(&amp;quot;player&amp;quot;, 85730) or (UnitBuffID(&amp;quot;player&amp;quot;, 12964) and unithealth &amp;gt;= 20) or (UnitBuffID(&amp;quot;player&amp;quot;, 86627) and rage &amp;gt;= 50) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Concussion Blow</Name><Default>false</Default><SpellID>12809</SpellID><Actions></Actions><Lua>_,_,_,_,_,_,_,_,interrupt = UnitCastingInfo(&amp;quot;target&amp;quot;)
+if GetSpellCooldown(6552) ~= 0 and interrupt == false then return true end</Lua><RecastDelay>30000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Demoralizing Shout</Name><Default>false</Default><SpellID>1160</SpellID><Actions></Actions><Lua>if UnitDebuffID(&amp;quot;target&amp;quot;, 1160) == nil then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Devastate</Name><Default>false</Default><SpellID>20243</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Enraged Regeneration</Name><Default>false</Default><SpellID>55694</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+if UnitBuffID(&amp;quot;player&amp;quot;, 12976) and IsUsableSpell(55694) and unithealth &amp;lt; 90 then return true end</Lua><RecastDelay>180000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Hold the aggro!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitGroupRolesAssigned(&amp;quot;targettarget&amp;quot;) == &amp;quot;TANK&amp;quot; and UnitIsUnit(&amp;quot;player&amp;quot;,&amp;quot;targettarget&amp;quot;) == nil then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Inner Rage</Name><Default>false</Default><SpellID>1134</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;gt;= 90 and (UnitDebuffID(&amp;quot;target&amp;quot;,86346) or GetSpellCooldown(86346) &amp;lt;= 6) then
+ return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Rend</Name><Default>false</Default><SpellID>772</SpellID><Actions></Actions><Lua>if UnitDebuffID(&amp;quot;target&amp;quot;, 94009) == nil then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Revenge</Name><Default>false</Default><SpellID>6572</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Shield Block</Name><Default>false</Default><SpellID>2565</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+if unithealth &amp;lt; 90 then return true end</Lua><RecastDelay>30000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Shield Slam</Name><Default>false</Default><SpellID>23922</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Shockwave</Name><Default>false</Default><SpellID>46968</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Vigilance</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil then
+
+local mytarget = nil
+local doneVG = nil
+local tophp = 0
+local allinrange = 1
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = UnitHealthMax(member)
+  local _,_,_,_,_,_,_,source = UnitBuffID(member, 50720)
+  if source == &amp;quot;player&amp;quot; then doneVG = 1 end
+  if UnitInRange(member) == false then allinrange = nil end
+  if memberhp &amp;gt; tophp and UnitInRange(member) and UnitIsUnit(&amp;quot;player&amp;quot;,member) == nil and source == nil and UnitGroupRolesAssigned(&amp;quot;target&amp;quot;) ~= &amp;quot;HEALER&amp;quot; then
+    mytarget = member
+    tophp = memberhp
+  end
+end
+
+
+if mytarget and doneVG == nil and allinrange and UnitIsDead(mytarget) == nil then CastSpellByID(50720, mytarget) end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: Victory Rush</Name><Default>false</Default><SpellID>34428</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+if IsUsableSpell(34428) and unithealth &amp;lt; 80 then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prot: TC debuff</Name><Default>false</Default><SpellID>6343</SpellID><Actions></Actions><Lua>if UnitDebuffID(&amp;quot;target&amp;quot;, 6343) == nil and CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Thunder Clap</Name><Default>false</Default><SpellID>6343</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Berserker Rage</Name><Default>false</Default><SpellID>18499</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 12292) == nil and UnitBuffID(&amp;quot;player&amp;quot;, 14202) == nil and UnitBuffID(&amp;quot;player&amp;quot;, 49016) == nil
+and GetSpellCooldown(85288) &amp;lt;= 1
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Bloodthirst</Name><Default>false</Default><SpellID>23881</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Colossus Smash</Name><Default>false</Default><SpellID>86346</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Execute</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local _,_,_,count = UnitBuffID(&amp;quot;player&amp;quot;,90806)
+if unithealth &amp;lt; 20 and (count ~= 5 or UnitPower(&amp;quot;player&amp;quot;) &amp;gt; 65) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Raging Blow</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 12292) or UnitBuffID(&amp;quot;player&amp;quot;, 14202) or UnitBuffID(&amp;quot;player&amp;quot;, 18499) or UnitBuffID(&amp;quot;player&amp;quot;, 49016) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Whirlwind</Name><Default>false</Default><SpellID>1680</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fury: Sunder Armor</Name><Default>false</Default><SpellID>7386</SpellID><Actions></Actions><Lua>if UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;)*10 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+
+buff = { 58567, 91565, 8647, 95467, 95466 }
+local _,_,_,count,_,_,timer,caster = UnitDebuffID(&amp;quot;target&amp;quot;,58567)
+local armordebuff = nil
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;target&amp;quot;,v) then armordebuff = 1 end
+end
+
+if armordebuff == nil and lastarmorcheck == nil then lastarmorcheck = GetTime() end
+if lastarmorcheck and GetTime()-lastarmorcheck &amp;gt; 5 and IsUsableSpell(7386) then
+  lastarmorcheck = nil
+  return true
+end
+
+if armordebuff and caster == &amp;quot;player&amp;quot; then
+  if count &amp;lt; 3 or timer-GetTime() &amp;lt; 3 then
+    return true
+  end
+end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Slam</Name><Default>false</Default><SpellID>1464</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+if rage &amp;gt;= 20 and unithealth &amp;gt;= 20 and GetSpellCooldown(85288) &amp;gt; 1 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Autotarget</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) and UnitExists(&amp;quot;target&amp;quot;) == nil then
+  TargetNearestEnemy()
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Trinket</Name><Default>false</Default><SpellID>0</SpellID><Actions>/use 14</Actions><Lua>if UnitFactionGroup(&amp;quot;player&amp;quot;) == &amp;quot;Alliance&amp;quot; then
+	if GetInventoryItemID(&amp;quot;player&amp;quot;, 14) == 64793 then
+		myTrinket = GetItemCooldown(64793)	
+	else
+		myTrinket = nil
+	end
+else
+	if GetInventoryItemID(&amp;quot;player&amp;quot;, 14) == 64794 then
+		
+		myTrinket = GetItemCooldown(64794)	
+	else
+		myTrinket = nil
+	end
+end
+
+if myTrinket ~= nil then
+	--check if we have a debuff
+	if myTrinket == 0 then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 118) --Polymorph
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 605) --Mind Control
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 51514) --Hex
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 6358) --Seduction
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 853) --Hammer of Justice	
+end
+
+		if pvpdebuffCheck ~= nil then
+			if (expire - GetTime()) &amp;gt;= 4 then
+				return true
+			else
+				return false
+			end
+		else
+			return false
+		end
+	else
+		return false
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Victory Rush</Name><Default>false</Default><SpellID>34428</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Enraged Regeneration</Name><Default>false</Default><SpellID>55694</SpellID><Actions></Actions><Lua>local enraged = UnitBuffID(&amp;quot;player&amp;quot;, 14202)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+		
+if enraged ~= nil and unithealth &amp;lt; 50 then
+	return true
+end</Lua><RecastDelay>180000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Berserker Rage</Name><Default>false</Default><SpellID>18499</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+if rage &amp;lt; 70 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Shattering Throw</Name><Default>false</Default><SpellID>64382</SpellID><Actions></Actions><Lua>bDS = UnitBuffID(&amp;quot;target&amp;quot;, 642) --Divine Shield
+bBOP = UnitBuffID(&amp;quot;target&amp;quot;, 1022) --Hand of Protection
+bIB = UnitBuffID(&amp;quot;target&amp;quot;, 45438) --Ice Block
+		
+if bDS ~= nil or bBOP ~= nil or bIB ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Hamstring</Name><Default>false</Default><SpellID>1715</SpellID><Actions>/startattack</Actions><Lua>local levelCheck = UnitLevel(&amp;quot;target&amp;quot;)
+if levelCheck == -1 then
+	--boss level is -1... do not cast this on a boss.
+	return false
+end
+
+if UnitName(&amp;quot;target&amp;quot;) ~= nil then
+	bHoF = UnitBuffID(&amp;quot;target&amp;quot;, 1044) --Hand of Freedom
+	if bHoF == nil then
+		bHoF = UnitBuffID(&amp;quot;target&amp;quot;, 53271) --Master&amp;apos;s Call
+	end
+	bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 1715) --Hamstring
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 45524) --Chains of Ice
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 16979) --Feral Charge
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 2974) --Wing Clip
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 13809) --Frost Trap...
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 5116) --Conc Shot
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 116) --Frostbolt
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 120) --Cone of Cold
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 11113) --Blast Wave
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 31589) --Slow
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 15407) --Mind Flay
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 3408) --Crippling Poison
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 26679) --Deadly Throw
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 8056) --Frost Shock
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 3600) --Earthbind
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 18223) --Curse of Exhaustion
+	end
+	if bSlow == nil then
+		bSlow = UnitDebuffID(&amp;quot;target&amp;quot;, 12323) --Piercing Howl
+	end
+	if bHoF == nil and bSlow == nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Throwdown</Name><Default>false</Default><SpellID>85388</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Colossus Smash</Name><Default>false</Default><SpellID>86346</SpellID><Actions>/startattack</Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346)
+if csDebuff == nil then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Mortal Strike</Name><Default>false</Default><SpellID>12294</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Execute</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local _,_,_,count = UnitBuffID(&amp;quot;player&amp;quot;,90806)
+		
+if unithealth &amp;lt; 20 then
+if count ~= 5 or UnitPower(&amp;quot;player&amp;quot;) &amp;gt; 65 then
+  return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PvP: Overpower</Name><Default>false</Default><SpellID>7384</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- defensive spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsAltKeyDown()
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;player&amp;quot;,80169)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- offensive spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977 }
+local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot; }
+local noaggromobs = nil
+local immunity = nil
+
+for i,v in ipairs(buff) do
+  if UnitBuffID(&amp;quot;target&amp;quot;,v) then immunity = 1 end
+end
+
+for i,v in ipairs(mob) do
+  if UnitName(&amp;quot;target&amp;quot;) == v then noaggromobs = 1 end
+end
+
+if UnitIsDead(&amp;quot;target&amp;quot;)
+or immunity
+or UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) == nil
+or (UnitAffectingCombat(&amp;quot;target&amp;quot;) == nil and noaggromobs == nil and UnitIsPlayer(&amp;quot;target&amp;quot;) == nil)
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Deadly Calm</Name><Default>false</Default><SpellID>85730</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+if rage &amp;lt; 20 and GetSpellCooldown(6673) &amp;gt; 10 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></WARRIOR>

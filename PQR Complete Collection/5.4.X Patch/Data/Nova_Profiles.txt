@@ -1,0 +1,72 @@
+		--    ^ COPY THIS ^    --
+		--    | URL INTO  |    --
+		--    "   PQR     "    --
+		-------------------------
+
+
+--IF YOU ARE VIEWING THIS FILE IN A WEB BROWSER
+
+--OPEN PQR, OPEN "ROTATION EDITOR", SELECT "DOWNLOAD PROFILE FROM URL"
+
+--AND PASTE THE URL FOR THIS WEBPAGE THERE.
+
+--ALL FILES BELOW WILL AUTOMATICALLY BE DOWNLOADED AND INSTALLED FOR YOU.
+
+DeleteProfile|PALADIN|BubbaHoly
+DeleteProfile|DEATHKNIGHT|Bentley [Blood]
+DeleteProfile|DRUID|BubbaBalance
+DeleteProfile|ROGUE|Bubba
+DeleteProfile|WARRIOR|Bubba
+DeleteProfile|DEATHKNIGHT|Mentally (Unholy)
+DeleteProfile|PRIEST|Mentally (Shadow PvE)
+DeleteLua|PQR_Bubba_Data
+DeleteLua|PQR_Mentally_Data
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DEATHKNIGHT/Nova%20[Blood]_DEATHKNIGHT_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DEATHKNIGHT/Nova%20[Blood]_DEATHKNIGHT_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DEATHKNIGHT/Nova%20[Unholy]_DEATHKNIGHT_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DEATHKNIGHT/Nova%20[Unholy]_DEATHKNIGHT_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PALADIN/Nova%20[Holy]_PALADIN_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PALADIN/Nova%20[Holy]_PALADIN_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARRIOR/Nova%20[Arms]_WARRIOR_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARRIOR/Nova%20[Arms]_WARRIOR_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARRIOR/Nova%20[Fury]_WARRIOR_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARRIOR/Nova%20[Fury]_WARRIOR_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DRUID/Nova%20[Balance]_DRUID_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DRUID/Nova%20[Balance]_DRUID_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/MONK/Nova%20[Wind]_MONK_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/MONK/Nova%20[Wind]_MONK_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/MONK/Nova%20%5BMist%5D_MONK_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/MONK/Nova%20[Mist]_MONK_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/HUNTER/Nova%20%5BBeast%20Mastery%5D_HUNTER_Rotations.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/HUNTER/Nova%20%5BBeast%20Mastery%5D_HUNTER_Abilities.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARLOCK/Nova%20%5BAffliction%5D_WARLOCK_Rotations.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARLOCK/Nova%20%5BAffliction%5D_WARLOCK_Abilities.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARLOCK/Nova%20%5BDestruction%5D_WARLOCK_Rotations.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/WARLOCK/Nova%20%5BDestruction%5D_WARLOCK_Abilities.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20%5BDisc%5D_PRIEST_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20%5BDisc%5D_PRIEST_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20[Shadow%20PvE]_PRIEST_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20[Shadow%20PvE]_PRIEST_Rotations.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DRUID/Nova%20%5BResto%5D_DRUID_Rotations.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/DRUID/Nova%20%5BResto%5D_DRUID_Abilities.xml
+
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/HUNTER/Nova%20[Survival]_HUNTER_Abilities.xml
+http://subversion.assembla.com/svn/nova-project/trunk/Profiles/HUNTER/Nova%20[Survival]_HUNTER_Rotations.xml
+
+--DATA File
+http://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Data.lua
+http://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Frame.lua

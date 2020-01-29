@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Options><ProfileVersion>2.0.4</ProfileVersion><AbilityURL>https://subversion.assembla.com/svn/nova-project/trunk/Profiles/MAGE/Nova%20%5bFire%20PvE%5d_MAGE_Abilities.xml</AbilityURL><RotationURL>https://subversion.assembla.com/svn/nova-project/trunk/Profiles/MAGE/Nova%20%5bFire%20PvE%5d_MAGE_Rotations.xml</RotationURL><LuaURL>https://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Data.lua</LuaURL></Options><Rotation><RotationName>Standard (Manual)</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Automatic Buffing|[Misc] Instance: Combat Detection|[Misc] Pause Rotation|Flamestrike|Blizzard|Level 90 Talent|Level 45 Talent|Level 30 Talent|Inferno Blast|Pyroblast|Mage Bomb|Mage Bomb (Mouseover)|Fireball|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Manual Fire Mage rotation based upon personal experience and SimulationCraft.  
+
+NOTE -- will not use: Presence of Mind, Combustion, Alter Time, Racial Abilities, Mirror Images, Mana Gems, Healthstones or Mirror Images automatically!!
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: AoE (Hold)
+ - Left Shift: Toggle Cooldown mode
+ - Left Alt: Pause Rotation
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation><Rotation><RotationName>Standard</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Automatic Buffing|[Misc] Mana Gem|[Misc] Instance: Combat Detection|[Misc] Pause Rotation|[Misc] Racials|[Misc] Alchemy: Lifeblood|Healthstone|Level 90 Talent|Level 45 Talent|Level 30 Talent|Presence of Mind|Alter Time|Inferno Blast|Pyroblast|Mirror Image|Mage Bomb|Mage Bomb (Mouseover)|Combustion|Fireball|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Fire Mage rotation based upon personal experience and SimulationCraft.
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: AoE (Hold)
+ - Left Shift: Toggle Cooldown mode
+ - Left Alt: Pause Rotation
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation><Rotation><RotationName>AoE Profile</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Automatic Buffing|[Misc] Mana Gem|[Misc] Instance: Combat Detection|[Misc] Pause Rotation|[Misc] Racials|[Misc] Alchemy: Lifeblood|Healthstone|Level 90 Talent|Mage Bomb|Mage Bomb (Mouseover)|Flamestrike|Blizzard</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Fire Mage rotation based upon personal experience and SimulationCraft.
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: AoE (Hold)
+ - Left Shift: Toggle Cooldown mode
+ - Left Alt: Pause Rotation
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation></MAGE>

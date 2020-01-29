@@ -1,0 +1,21 @@
+------------------------------------------------------------------------
+r90 | talyrius | 2014-11-07 03:45:55 +0000 (Fri, 07 Nov 2014) | 1 line
+Changed paths:
+   A /tags/r90-release (from /trunk:89)
+
+Tagging as r90-release
+------------------------------------------------------------------------
+r89 | Talyrius | 2014-10-22 20:32:45 +0000 (Wed, 22 Oct 2014) | 1 line
+Changed paths:
+   M /trunk/LibBossIDs-1.0.lua
+   M /trunk/LibBossIDs-1.0.toc
+
+- Updated for Patch 6.0.2: The Iron Tide
+------------------------------------------------------------------------
+r88 | Resike | 2014-07-28 16:23:02 +0000 (Mon, 28 Jul 2014) | 1 line
+Changed paths:
+   M /trunk/.pkgmeta
+   M /trunk/LibBossIDs-1.0.lua
+
+- Code clean up.
+------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Options><ProfileVersion>5.2.0-032413</ProfileVersion><AbilityURL></AbilityURL><RotationURL></RotationURL><LuaURL></LuaURL><LegacyMode>True</LegacyMode></Options><Rotation><RotationName>{Survival}</RotationName><RotationDefault>false</RotationDefault><RotationList>--Configs|--Routines|Utility - Misdirection|Utility - Tranq|Mark - Hunters|Utility - Traps|Utility - Mend Pet|Shot - AoE|Talent - Tier 5|Talent - Tier 4|Sting - Serpent|Utility - Widow|Shot - Black Arrow|Shot - Kill|Shot - Explosive|Talent - Tier 6|CD - Rapid Fire|CD - Stampede|CD - Readiness|Shot - Arcane|Shot - Cobra</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Notes:
+
+Patch 5.2
+
+ADDED-
+Trap Launcher:
+If explosive trap/black arrow is on CD it will throw a Snake trap.
+
+You can Choose a ice trap or freezing trap via the Nova Frame
+Freezing is default.
+
+Added support back to all dps talents using a new method.
+
+</RotationNotes></Rotation></HUNTER>

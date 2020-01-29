@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Options><ProfileVersion>9.2</ProfileVersion><AbilityURL>http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20[Shadow%20PvE]_PRIEST_Abilities.xml</AbilityURL><RotationURL>http://subversion.assembla.com/svn/nova-project/trunk/Profiles/PRIEST/Nova%20[Shadow%20PvE]_PRIEST_Rotations.xml</RotationURL><LuaURL>http://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Data.lua</LuaURL><LegacyMode>True</LegacyMode></Options><Rotation><RotationName>Standard</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] MSV Events|[Misc] Pause Rotation|[Support] Automatic Buffing|[Misc] Instance: Combat Detection|[Support] Racials|[Support] Dispersion|[Support] Mass Dispel|[Support] Healthstone|[Support] Potion Usage|[Support] Power Infusion|[Support] Desperate Prayer|[Support] Vampiric Embrace|[Support] Alchemy: Lifeblood|[Support] Void Shift (Mouseover)|[Crowd Control] Level 15 Talent|Mind Spike (Movement)|Devouring Plague|Mind Blast|Shadow Word: Death|Shadowfiend|Level 90 Talent|Vampiric Touch|Vampiric Touch (Mouseover)|Shadow Word: Pain|Shadow Word: Pain (Mouseover)|Mind Spike|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Shadow Priest rotation based upon personal experience and SimulationCraft. 5.2 Ready!
+
+Support:
+ - Mouseover dotting of Vampiric Embrace + Shadow Word: Pain
+ - Racial abilities
+ - Automatic healthstone usage
+ - And much more, fully customizable in-game through /nova !
+
+
+Keybindings are now fully configurable in-game!
+
+- Left Shift: Level 90 Talent
+- Left Alt: Mass Dispel @ Mouseover location
+- Right Alt: Dispersion
+- Right Control: Pause Rotation
+- Right Shift: Toggle cooldown mode</RotationNotes></Rotation></PRIEST>

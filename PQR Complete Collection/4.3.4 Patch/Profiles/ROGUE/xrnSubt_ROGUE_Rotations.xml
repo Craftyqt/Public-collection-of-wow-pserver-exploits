@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?><ROGUE><Rotation><RotationName>Subtlely PvP [10/0/31]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|Pick Lock|Apply Poisons|Will of the Forsaken|Sap|Shadow Dance|Smoke Bomb|Preparation|Stealth|--- offensive spells ---|Feint|Combat Readiness|Cloak of Shadows|Evasion|Dismantle|Shadowstep|Deadly Throw|Kidney Shot|Recuperate|Slice and Dice|Eviscerate|Cheap Shot|Garrote|Gouge|Ambush|Shiv|Backstab|Hemorrhage</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#fMhfZZsGfcdu0Rho
+
+-- Hotkeys
+Hold down LEFT ALT pause rotation
+
+-- Features
+Auto Pick Lock when any player trade you a Lockbox
+Auto apply poisons</RotationNotes></Rotation></ROGUE>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Rotation><RotationName>HolyPvP</RotationName><RotationDefault>false</RotationDefault><RotationList>Aura|ConcentrationAura|ResistanceAura|CrusaderAura|Don&amp;apos;t Dismount|BoM|BoK|Seal of Insight|SelfBeacon|Divine Plea|Hand of Freedom|Autotarget Low HP|Judgement|Crusader Strike|AutoStopCasting|Divine Shield|Word of Glory|Avenging Wrath|Holy Shock|Divine Protection|Divine Favor|Guardian of Ancient Kings|Flash of Light|Divine Light|Hand of Freedom (Party)|Cleanse Old|Holy Light</RotationList><RequireCombat>false</RequireCombat><RotationNotes>*Notes*
+-)Blessing of Might is cast by default and the only way to stop this it to Remove BoM from rotation
+-)Beacon is autocast on self, same as before remove it from rotation to stop this.
+-)Concentration Aura is by default you only Aura useable when not mounted</RotationNotes></Rotation></PALADIN>

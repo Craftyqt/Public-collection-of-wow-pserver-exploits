@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Rotation><RotationName>Fire PvE [3/35/3]</RotationName><RotationDefault>false</RotationDefault><RotationList>--- defensive spells ---|Ice Block|Molten Armor|Arcane Brilliance|Mana Gem (Create)|Mana Gem (Use)|Evocation|Assist Tank|--- offensive spells ---|Spellsteal|USE: Trinket 1|USE: Trinket 2|USE: Gloves|Mirror Image|Flame Orb|Combustion|Living Bomb|Pyroblast!|Fire Blast|Dragon&amp;apos;s Breath|Blast Wave|Flamestrike|Fireball|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Test with this build
+http://www.wowhead.com/talent#o0hZffhbkbRRsfoc
+
+-- Hotkeys
+Hold down ALT pause rotation
+Hold down LEFT SHIFT to AoE
+(make sure your mouse pointer is under the mobs when aoe)
+
+-- Behaviour
+Cast Mirror Images if target hp is ten times player hp
+Cast Iceblock if player hp &amp;lt; 10%
+To use abilities like polymorph or timewarp, hold down ALT and click the abiliy, or use a keybind by example: ALT+D</RotationNotes></Rotation></MAGE>

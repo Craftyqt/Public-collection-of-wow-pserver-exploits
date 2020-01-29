@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>PVE</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--------------------
+--Start of RunOnce--
+--------------------
+if not _wiptankfirstload then
+	
+	_wiptankfirstload = true
+	
+	if not PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) then
+		PQR_WriteToChat(&amp;quot;You are missing a key file: PQR_Nova_Data.lua. Please put this file in the Data folder and reload PQR. Thank You!&amp;quot;, &amp;quot;Error&amp;quot;)
+		PQR_RotationStop()
+		return true
+	end
+	
+	_shorthand()
+	
+	_checkSpell = nil
+	function _checkSpell(sid, tar)
+		if _UE(tar) then
+			if _PS(sid) and _SA(sid) then
+				if tar ~= nil then
+					if _SIR(_GI(78), tar) == 1 then return true else return false end
+				elseif tar == nil then
+					return true
+				end
+			else
+				return false
+			end
+		end
+	end
+	
+	_Cast = nil
+	function _Cast(sid, tar)
+		_CSN(_GI(sid), tar)
+	end
+	
+	_Pauserotation = nil
+	function _Pauserotation()
+		if not UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+			or IsMounted()
+			or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;)
+			or UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+			or SpellIsTargeting()
+			or _Mod() == 4
+			or _Pause == true
+		then 
+			return true
+		end
+	end
+	
+	
+		--Notify Frame
+PQ_NotifyFrame = CreateFrame(&amp;quot;Frame&amp;quot;)
+PQ_NotifyFrame:ClearAllPoints()
+PQ_NotifyFrame:SetHeight(12)
+PQ_NotifyFrame:SetWidth(300)
+PQ_NotifyFrame:Show()
+PQ_NotifyFrame.text = PQ_NotifyFrame:CreateFontString(nil, &amp;quot;BACKGROUND&amp;quot;, &amp;quot;GameTooltipText&amp;quot;)
+PQ_NotifyFrame.text2 = PQ_NotifyFrame:CreateFontString(nil, &amp;quot;BACKGROUND&amp;quot;, &amp;quot;GameTooltipText&amp;quot;)
+PQ_NotifyFrame.text:SetAllPoints()
+PQ_NotifyFrame.text2:SetAllPoints()
+PQ_NotifyFrame:SetPoint(&amp;quot;CENTER&amp;quot;, -200, -15)
+PQ_NotifyFrame:SetScale(.72)
+PQ_NotifyFrame:SetScript(&amp;quot;OnUpdate&amp;quot;, PQ_NotifyFrame_OnUpdate)
+PQ_NotifyFrame:EnableMouse(true)
+PQ_NotifyFrame:SetMovable(true)
+PQ_NotifyFrame:RegisterForDrag(&amp;quot;LeftButton&amp;quot;)
+PQ_NotifyFrame:SetScript(&amp;quot;OnDragStart&amp;quot;, PQ_NotifyFrame.StartMoving)
+PQ_NotifyFrame:SetScript(&amp;quot;OnDragStop&amp;quot;, PQ_NotifyFrame.StopMovingOrSizing)
+PQ_NotifyFrame.text:SetText(&amp;quot;AoE: OFF&amp;quot;)
+PQ_NotifyFrame.text2:SetText(&amp;quot;                    DPS Mode: OFF&amp;quot;)
+
+
+		
+function PQ_Notify(message)
+ 	if PQ_NotifyFrame:IsShown() then
+ 		PQ_NotifyFrame.text:SetText(message) 	
+ 	end
+end
+
+function PQ_Notify2(message)
+ 	if PQ_NotifyFrame:IsShown() then
+ 		PQ_NotifyFrame.text2:SetText(message) 	
+ 	end
+end
+
+SlashCmdList[&amp;apos;DEBUG&amp;apos;] = function()
+if PQ_NotifyFrame:IsShown() then
+		PQ_NotifyFrame:Hide()
+	else
+		PQ_NotifyFrame:Show()
+	end
+end
+
+SLASH_DEBUG1 = &amp;quot;/pqd&amp;quot;
+	
+end
+------------------
+--End of RunOnce--
+------------------
+
+nWarriorRotation()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--Timer</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--5 Min Timer
+if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	if not TimerStart then TimerStart = GetTime() end
+	if GetTime() - TimerStart &amp;gt;= 300 then ClearTarget() TimerStart = GetTime() PQR_StopRotation() end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></WARRIOR>

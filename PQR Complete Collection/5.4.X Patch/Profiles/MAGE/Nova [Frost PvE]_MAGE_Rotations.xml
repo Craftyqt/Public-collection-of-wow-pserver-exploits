@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Options><ProfileVersion>1.0</ProfileVersion><AbilityURL>https://subversion.assembla.com/svn/nova-project/trunk/Profiles/MAGE/Nova%20%5bFrost%20PvE%5d_MAGE_Abilities.xml</AbilityURL><RotationURL>https://subversion.assembla.com/svn/nova-project/trunk/Profiles/MAGE/Nova%20%5bFrost%20PvE%5d_MAGE_Rotations.xml</RotationURL><LuaURL>https://subversion.assembla.com/svn/nova-project/trunk/Data/PQR_Nova_Data.lua</LuaURL></Options><Rotation><RotationName>Standard</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Pet Management|[Misc] Automatic Buffing|[Misc] Instance: Combat Detection|[Misc] Racials|[Misc] Mana Gem|[Misc] Pause Rotation|[Misc] Alchemy: Lifeblood|[Pet] Freeze|Alter Time|Icy Veins|Healthstone|Level 30 Talent|Level 45 Talent|Level 90 Talent|Frozen Orb|Mage Bomb|Mage Bomb (Mouseover)|Mirror Image|Frostfire Bolt|Frostbolt (Debuff)|Ice Lance|Frostbolt|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Frost Mage rotation based upon personal experience and SimulationCraft.
+
+New!: Because of a bug in PQR, the AoE toggle have been moved to it&amp;apos;s own rotation. Hold Left Control while using this rotation to AoE.
+
+NOTE -- Manual profile will not use these spells automatically:
+	- Alter Time
+	- Racial Abilities
+	- Mirror Images
+	- Mana Gems
+	- Healthstones
+	- Pet Freeze Ability
+	- Mirror Images
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: Freeze on Mouseover Location
+ - Left Shift: Toggle Cooldown mode
+ - Left Alt: Pause Rotation
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation><Rotation><RotationName>AoE Rotation</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Pet Management|[Misc] Automatic Buffing|[Misc] Instance: Combat Detection|[Misc] Racials|[Misc] Mana Gem|[Misc] Pause Rotation|[Misc] Alchemy: Lifeblood|Healthstone|Level 30 Talent|Level 45 Talent|Level 90 Talent|Frozen Orb|Flamestrike|Blizzard|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Frost Mage rotation based upon personal experience and SimulationCraft.
+
+New!: Because of a bug in PQR, the AoE toggle have been moved to it&amp;apos;s own rotation. Hold Left Control while using this rotation to AoE.
+
+NOTE -- Manual profile will not use these spells automatically:
+	- Alter Time
+	- Racial Abilities
+	- Mirror Images
+	- Mana Gems
+	- Healthstones
+	- Pet Freeze Ability
+	- Mirror Images
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: AoE on mouseover location
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation><Rotation><RotationName>Standard (Manual)</RotationName><RotationDefault>false</RotationDefault><RotationList>[Misc] Initialization|[Misc] Pet Management|[Misc] Automatic Buffing|[Misc] Instance: Combat Detection|[Misc] Pause Rotation|Level 30 Talent|Level 45 Talent|Level 90 Talent|Frozen Orb|Mage Bomb|Mage Bomb (Mouseover)|Frostfire Bolt|Frostbolt (Debuff)|Ice Lance|Frostbolt|Scorch</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Automatic Frost Mage rotation based upon personal experience and SimulationCraft.
+
+New!: Because of a bug in PQR, the AoE toggle have been moved to it&amp;apos;s own rotation. Hold Left Control while using this rotation to AoE.
+
+NOTE -- Manual profile will not use these spells automatically:
+	- Alter Time
+	- Racial Abilities
+	- Mirror Images
+	- Mana Gems
+	- Healthstones
+	- Pet Freeze Ability
+	- Mirror Images
+
+Support:
+ - Mouseover dotting of Mage Bomb
+ - Racial Abilities
+ - Advanced Alter Time logic supporting most MoP trinkets
+ - All new talent logic for all talents
+
+Key-bindings:
+ - Left Control: Freeze on Mouseover Location
+ - Left Shift: Toggle Cooldown mode
+ - Left Alt: Pause Rotation
+ - Right Alt: Chosen Level 45 Talent
+ - Right Control: Chosen Level 90 Talent
+ - Right Shift: Chosen Level 30 Talent</RotationNotes></Rotation></MAGE>

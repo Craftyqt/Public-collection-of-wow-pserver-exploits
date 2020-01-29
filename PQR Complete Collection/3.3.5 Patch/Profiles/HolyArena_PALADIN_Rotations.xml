@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Rotation><RotationName>HolyArena</RotationName><RotationDefault>false</RotationDefault><RotationList>Focus/Pause|Denounce (LeftAlt)|ConcentrationAura|CrusaderAura|Don&amp;apos;t Dismount|BoM|BoK|Seal of Insight|Hand of Freedom|Divine Favor (AM)|Divine Plea|Autotarget Low HP|Judgement|AutoStopCasting|Crusader Strike|Denounce|Divine Shield|Word of Glory|Avenging Wrath|Holy Shock|Divine Protection|Divine Light (Proc)|Flash of Light (proc)|Divine Light|Flash of Light|GoAK|Hand of Freedom (Party)|Cleanse Old</RotationList><RequireCombat>false</RequireCombat><RotationNotes>*Notes*
+-)Blessing of Might is cast by default
+-)Hold Left Alt to Spam Exoricism (For Denounce Specced Pallys)
+-)Judgement should auto-cast when it&amp;apos;s not up, or when noone needs healing and your target is an enemy</RotationNotes></Rotation></PALADIN>

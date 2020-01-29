@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?><WARLOCK><Ability><Name>Immolate</Name><Default>false</Default><SpellID>348</SpellID><Actions></Actions><Lua>if not PQR_IsMoving() and not UnitDebuffID(PQR_CustomTarget, 348) then
+	CastSpellByName(GetSpellInfo(348), PQR_CustomTarget)
+	return true
+elseif not PQR_IsMoving() and select(7, UnitDebuffID(PQR_CustomTarget, 348)) - GetTime() &amp;lt;= 2.5 then
+	CastSpellByName(GetSpellInfo(348), PQR_CustomTarget)
+	return true
+end</Lua><RecastDelay>1000</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Functions --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted then
+	PQR_RotationStarted = false
+	
+	
+	-- Load the Data File
+	if PQR_LoadLua ~= nil then
+		-- Load Data File
+		if PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) == false then
+			PQR_WriteToChat(&amp;quot;You are missing PQR_Nova_Data.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
+			PQR_StopRotation()
+			return true
+		end
+	end
+	
+	-- Variables
+	PQR_ResetMovementTime = 0.2
+	PQR_SpellAvailableTime = ((select(3,GetNetStats()) + select(4,GetNetStats())) / 1000)
+	
+	PQR_WriteToChat(&amp;quot;|cff6611EENova Warlock - |cffFF1100v 1.0&amp;quot;)
+	
+	NUI = Nova_UnitInfo
+	
+	
+	
+end
+
+if Nova_Pause(1) then -- 1 = Left Shit, 2 = Left Control, 3 = Left Alt, 4 = Right Shift, 5 = Right Control, 6 = Right Alt
+	return true
+end
+
+if IsMounted() or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Incinerate</Name><Default>false</Default><SpellID>29722</SpellID><Actions></Actions><Lua>if not PQR_IsMoving() then
+	CastSpellByName(GetSpellInfo(29722), PQR_CustomTarget)
+	return true
+end</Lua><RecastDelay>1</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Conflagrate</Name><Default>false</Default><SpellID>17962</SpellID><Actions></Actions><Lua>if UnitDebuffID(PQR_CustomTarget, 348) then
+	if select(5, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 1 then
+		return true
+	elseif GetSpellCharges(17962) &amp;gt;= 2 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Chaos Bolt</Name><Default>false</Default><SpellID>116858</SpellID><Actions></Actions><Lua>local Backdraft = UnitBuffID(&amp;quot;player&amp;quot;, 117828)
+
+if not PQR_IsMoving() 
+ and not UnitBuffID(&amp;quot;player&amp;quot;, 113858) then
+ 	if ( Backdraft and select(4, UnitBuffID(&amp;quot;player&amp;quot;, 117828)) &amp;gt;= 3 and IsPlayerSpell(123686) )
+ 	 or select(5, NUI(&amp;quot;player&amp;quot;)) &amp;gt;= 4 then
+		return true
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Combat Check --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsRightControlKeyDown() and not GetCurrentKeyBoardFocus() then
+	if IsSpellInRange(GetSpellInfo(77799), &amp;quot;mouseover&amp;quot;) == 1
+	 and UnitExists(&amp;quot;mouseover&amp;quot;) then
+		if not IsInInstance() 
+		 and not UnitIsDeadOrGhost(&amp;quot;mouseover&amp;quot;)
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+		 	PQR_CustomTarget = &amp;quot;mouseover&amp;quot;
+		 	return false
+		elseif IsInInstance()
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;)
+		 and not UnitIsDeadOrGhost(&amp;quot;mouseover&amp;quot;)
+		 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+		 	PQR_CustomTarget = &amp;quot;mouseover&amp;quot;
+		 	return false
+		else
+		 	return true
+		end
+	else 
+		return true
+	end
+else
+	if IsSpellInRange(GetSpellInfo(77799), &amp;quot;target&amp;quot;) == 1
+	 and UnitExists(&amp;quot;target&amp;quot;)
+	 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+		if not IsInInstance() 
+		 and not UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+		 	PQR_CustomTarget = &amp;quot;target&amp;quot;
+		 	return false
+		elseif IsInInstance()
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+		 and not UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+		 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+		 	PQR_CustomTarget = &amp;quot;target&amp;quot;
+		 	return false
+		else
+		 	return true
+		end
+	else 
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Pet</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not UnitExists(&amp;quot;pet&amp;quot;) and not UnitBuffID(&amp;quot;player&amp;quot;, 108503) then
+	CastSpellByID(688, &amp;quot;player&amp;quot;)
+	return true
+end
+
+if UnitExists(&amp;quot;pet&amp;quot;) and PQR_IsCastingSpell(686) then SpellStopCasting() end</Lua><RecastDelay>2000</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Grimoire of Sacrifice</Name><Default>false</Default><SpellID>108503</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;pet&amp;quot;) and not UnitBuffID(&amp;quot;player&amp;quot;, 108503) then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Pet</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shadowfury</Name><Default>false</Default><SpellID>30283</SpellID><Actions></Actions><Lua>if IsPlayerSpell(30283) 
+ and IsLeftControlKeyDown()
+ and not GetCurrentKeyBoardFocus() then
+ 	CastSpellByName(GetSpellInfo(30283))
+	if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Click</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Fel Flame</Name><Default>false</Default><SpellID>77799</SpellID><Actions></Actions><Lua>if PQR_IsMoving() 
+ and UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+ and PQR_UnitFacing(&amp;quot;player&amp;quot;, PQR_CustomTarget) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Ember Tap</Name><Default>false</Default><SpellID>114635</SpellID><Actions></Actions><Lua>if NUI(&amp;quot;player&amp;quot;) &amp;lt;= 65
+ and not IsInInstance()
+ and select(5, NUI(&amp;quot;player&amp;quot;)) &amp;gt;= 1 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shadowburn</Name><Default>false</Default><SpellID>17877</SpellID><Actions></Actions><Lua>if NUI(PQR_CustomTarget) &amp;lt; 20 and select(5, NUI(&amp;quot;player&amp;quot;)) &amp;gt;= 1 then
+	if IsInInstance() then
+		if select(3, NUI(&amp;quot;player&amp;quot;)) &amp;lt;= 30 or NUI(PQR_CustomTarget) &amp;lt;= 10 then
+			return true
+		end
+	else
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Blood Fear</Name><Default>false</Default><SpellID>111397</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Dark Bargain</Name><Default>false</Default><SpellID>110913</SpellID><Actions></Actions><Lua>if IsSpellKnown(110913) 
+ and IsRightAltKeyDown()
+ and not GetCurrentKeyBoardFocus() then
+ 	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Spell Check --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;pet&amp;quot;) 
+ and UnitCastingInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(688) then
+ 	SpellStopCasting()
+end
+
+if UnitBuffID(&amp;quot;player&amp;quot;, 117828) 
+ and select(4, UnitBuffID(&amp;quot;player&amp;quot;, 117828)) &amp;gt;= 3
+ and IsSpellKnown(123686) then
+	if UnitCastingInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(29722) then
+		SpellStopCasting()
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Curse of Elements</Name><Default>false</Default><SpellID>1490</SpellID><Actions></Actions><Lua>if not UnitDebuffID(PQR_CustomTarget, 1490) 
+ and UnitExists(PQR_CustomTarget) 
+ and UnitIsUnit(PQR_CustomTarget, &amp;quot;boss1&amp;quot;) then
+	return true
+end</Lua><RecastDelay>1000</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Chaos Bolt (Burn)</Name><Default>false</Default><SpellID>116858</SpellID><Actions></Actions><Lua>if not PQR_IsMoving()
+ and UnitBuffID(&amp;quot;player&amp;quot;, 113858) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Havoc</Name><Default>false</Default><SpellID>80240</SpellID><Actions></Actions><Lua>if Nova_Pause(3) then -- 3 = Left Alt
+	if UnitExists(&amp;quot;mouseover&amp;quot;)
+	 and not UnitIsUnit(&amp;quot;target&amp;quot;, &amp;quot;mouseover&amp;quot;)
+	 and not UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;)
+	 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rain of Fire</Name><Default>false</Default><SpellID>104232</SpellID><Actions></Actions><Lua>if Nova_Pause(6) and IsPlayerSpell(104232) then
+ 	CastSpellByName(GetSpellInfo(104323))
+	if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+	return true	
+end</Lua><RecastDelay>100</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARLOCK>

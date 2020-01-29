@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Ability><Name>Autotarget Low HP</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;target&amp;quot;) 
+  and UnitIsDead(&amp;quot;target&amp;quot;) == nil
+  and UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+  and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+  then PQR_CustomTarget = &amp;quot;target&amp;quot;
+          PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+elseif UnitExists(&amp;quot;mouseover&amp;quot;) and UnitIsDead(&amp;quot;mouseover&amp;quot;) == nil 
+  and UnitIsDead(&amp;quot;mouseover&amp;quot;) == nil 
+  and UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;)
+  and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;mouseover&amp;quot;) 
+  and GetMouseFocus() ~= WorldFrame 
+  then PQR_CustomTarget = &amp;quot;mouseover&amp;quot;
+          PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;mouseover&amp;quot;) / UnitHealthMax(&amp;quot;mouseover&amp;quot;)
+else 
+
+PQR_CustomTarget = &amp;quot;player&amp;quot;
+PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+lowhpmembers = 0
+local lowest = 100
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = 100 * UnitHealth(member) / UnitHealthMax(member)
+  if UnitInRange(member) 
+  and UnitIsFriend(&amp;quot;player&amp;quot;, member)
+  and UnitIsDeadOrGhost(member) == nil  then
+    if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 1 end
+    if UnitThreatSituation(member) == 3 then memberhp = memberhp - 3 end
+    if UnitBuffID(member, 53563) ~= nil then memberhp = memberhp + 7 end
+    if memberhp &amp;lt; 85 then lowhpmembers = lowhpmembers +1 end
+    if memberhp &amp;lt; lowest then
+      PQR_CustomTarget = member
+      lowest = memberhp
+      PQR_CustomTargetHP = 100 * UnitHealth(PQR_CustomTarget) / UnitHealthMax(PQR_CustomTarget)
+    end
+  end
+end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Holy Light</Name><Default>false</Default><SpellID>635</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 95 and PQR_IsMoving(1) == false and PQR_IsCastingSpell(635) == false then 
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Arcane Torrent</Name><Default>false</Default><SpellID>28730</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local BE = UnitRace(&amp;quot;player&amp;quot;)
+
+if myMana &amp;lt; 70 and BE == &amp;quot;Blood Elf&amp;quot; then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Shield</Name><Default>false</Default><SpellID>642</SpellID><Actions></Actions><Lua>local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myHealth &amp;lt; 16 then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Holy Shock</Name><Default>false</Default><SpellID>20473</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 94 then 
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Word of Glory</Name><Default>false</Default><SpellID>85673</SpellID><Actions></Actions><Lua>local myHolyPower = UnitPower(&amp;quot;player&amp;quot;, 9)
+
+if PQR_CustomTargetHP &amp;lt; 80 and myHolyPower == 3 then 
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Insight</Name><Default>false</Default><SpellID>20165</SpellID><Actions></Actions><Lua>local SoI = UnitBuffID(&amp;quot;player&amp;quot;, 20165)
+
+if SoI == nil then 
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>AutoStopCasting</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local Spell = UnitCastingInfo(&amp;quot;player&amp;quot;)
+
+if PQR_CustomTargetHP &amp;gt; 96 then
+	if Spell == &amp;quot;Holy Light&amp;quot; or Spell == &amp;quot;Divine Light&amp;quot; or Spell == &amp;quot;Flash of Light&amp;quot; then
+		SpellStopCasting()
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Holy Radiance</Name><Default>false</Default><SpellID>82327</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if lowhpmembers &amp;gt;= 3 and myMana &amp;gt;10 and PQR_IsMoving(1) == false then 
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Don&amp;apos;t Dismount</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Judgement</Name><Default>false</Default><SpellID>20271</SpellID><Actions></Actions><Lua>if UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Polymorph&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Freezing Trap&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Scatter Shot&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Bad Manner&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Ring of Frost&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Fear&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Sap&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Blind&amp;quot;) or UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Hungering Cold&amp;quot;) then 
+	return false 
+end 
+
+local SoI = UnitBuffID(&amp;quot;player&amp;quot;, 20165)
+local SoJ = UnitBuffID(&amp;quot;player&amp;quot;, 20164)
+local SoR = UnitBuffID(&amp;quot;player&amp;quot;, 20154)
+local SoT = UnitBuffID(&amp;quot;player&amp;quot;, 31801)
+local JotP1 = UnitBuffID(&amp;quot;player&amp;quot;, 53655)
+local JotP2 = UnitBuffID(&amp;quot;player&amp;quot;, 53656)
+local JotP3 = UnitBuffID(&amp;quot;player&amp;quot;, 53657)
+local inRange = IsSpellInRange(&amp;quot;Judgement&amp;quot;, &amp;quot;target&amp;quot;)
+local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	if (SoR ~= nil or SoT ~= nil or SoJ ~= nil or SoI ~= nil) and JotP1== nil and JotP2 == nil and JotP3 == nil then
+		if IsSpellInRange(&amp;quot;Judgement&amp;quot;, PQR_CustomTargettarget) == 1 then
+			CastSpellByID(20271,PQR_CustomTargettarget)
+		end
+	elseif PQR_CustomTargetHP &amp;gt; 80 then
+		if UnitAffectingCombat(&amp;quot;player&amp;quot;) and UnitIsEnemy(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) and inRange == 1 then
+			return true
+		end
+	end
+end
+
+if myMana &amp;lt; 15 then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CrusaderAura</Name><Default>false</Default><SpellID>32223</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 5 and IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ConcentrationAura</Name><Default>false</Default><SpellID>19746</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 3 and IsMounted() == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Protection</Name><Default>false</Default><SpellID>498</SpellID><Actions></Actions><Lua>local myHealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myHealth &amp;lt; 42 then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Avenging Wrath</Name><Default>false</Default><SpellID>31884</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 40 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Light</Name><Default>false</Default><SpellID>82326</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 58 and PQR_IsMoving(1) == false and PQR_IsCastingSpell(82326) == false then 
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Favor</Name><Default>false</Default><SpellID>31842</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 45 and lowhpmembers &amp;gt;= 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Plea</Name><Default>false</Default><SpellID>54428</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if myMana &amp;lt; 75 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flash of Light</Name><Default>false</Default><SpellID>19750</SpellID><Actions></Actions><Lua>local Infusion = UnitBuffID(&amp;quot;player&amp;quot;, 54149)
+
+if PQR_CustomTargetHP &amp;lt; 28 and PQR_IsMoving(1) == false and PQR_IsCastingSpell(19750) == false then 
+	return true
+elseif PQR_CustomTargetHP &amp;lt; 70 and PQR_IsMoving(.1) and Infusion ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cleanse</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff = { 96328, 96325, 96326, 92876, 92877, 92878, 86788, 30108, 34914 }
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 0, members, 1 do
+  if i==0 then mem = &amp;quot;player&amp;quot; else mem = group..tostring(i) end
+  if UnitInRange(mem) and UnitIsDeadOrGhost(mem) == nil then
+   local candispel = 1
+   for k,v in ipairs(buff) do
+    if UnitDebuffID(mem,v) then candispel = nil end
+   end
+   local j = 1
+   local debuff,_,_,count,bufftype,dur = UnitDebuff(mem, j)
+   while debuff do
+    if ((bufftype == &amp;quot;Magic&amp;quot;) or (bufftype == &amp;quot;Curse&amp;quot;)) and dur &amp;gt; 1 and candispel then
+     CastSpellByID(51886 ,mem)
+     return true
+    end
+    j = j + 1;
+    debuff,_,_,count,bufftype,duration = UnitDebuff(mem, j)
+    end
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Guardian of Ancient Kings</Name><Default>false</Default><SpellID>86150</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 30 then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cleanse Old</Name><Default>false</Default><SpellID>4987</SpellID><Actions></Actions><Lua>local greencauldron = UnitDebuffID(PQR_CustomTarget, 96328)
+local bluecauldron = UnitDebuffID(PQR_CustomTarget, 96325)
+local redcauldron = UnitDebuffID(PQR_CustomTarget, 96326)
+local blackout10 = UnitDebuffID(PQR_CustomTarget, 92876)
+local blackout25 = UnitDebuffID(PQR_CustomTarget, 92878)
+local unstableaf = UnitDebuffID(PQR_CustomTarget, 30108)
+local ZGPoison = UnitDebuffID(PQR_CustomTarget, 97599)
+local VT = UnitDebuffID(PQR_CustomTarget, 34941)
+
+if greencauldron or bluecauldron or redcauldron or blackout10 or blackout25 or unstableaf or VT then
+  return false
+else
+for i=1,40 do
+  local _,_,_,count,ismagic,duration = UnitDebuff(PQR_CustomTarget,i)
+  if ismagic == &amp;quot;Magic&amp;quot; or ismagic == &amp;quot;Disease&amp;quot; or ismagic == &amp;quot;Poison&amp;quot; then
+    if  duration &amp;gt; 6 and count ~= 1 then 
+	return true
+    end
+  end
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Autotarget Low HP (No MO)</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;target&amp;quot;) 
+  and UnitIsDead(&amp;quot;target&amp;quot;) == nil
+  and UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+  and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+  then PQR_CustomTarget = &amp;quot;target&amp;quot;
+          PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+else 
+
+PQR_CustomTarget = &amp;quot;player&amp;quot;
+PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+lowhpmembers = 0
+local lowest = 100
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = 100 * UnitHealth(member) / UnitHealthMax(member)
+  if UnitInRange(member) 
+  and UnitIsFriend(&amp;quot;player&amp;quot;, member)
+  and UnitIsDeadOrGhost(member) == nil  then
+    if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 1 end
+    if UnitThreatSituation(member) == 3 then memberhp = memberhp - 3 end
+    if UnitBuffID(member, 53563) ~= nil then memberhp = memberhp + 7 end
+    if memberhp &amp;lt; 85 then lowhpmembers = lowhpmembers +1 end
+    if memberhp &amp;lt; lowest then
+      PQR_CustomTarget = member
+      lowest = memberhp
+      PQR_CustomTargetHP = 100 * UnitHealth(PQR_CustomTarget) / UnitHealthMax(PQR_CustomTarget)
+    end
+  end
+end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Arcane Torrent - Test 2</Name><Default>false</Default><SpellID>28730</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local BE, EN = UnitRace(&amp;quot;player&amp;quot;)
+
+if myMana &amp;lt; 70 and (BE == &amp;quot;Blood Elf&amp;quot; or EN == &amp;quot;Blood Elf&amp;quot;) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Beacon</Name><Default>false</Default><SpellID>53563</SpellID><Actions></Actions><Lua>local BeaconTarget = nil
+local BeaconTank = nil
+local BeaconTankTarget = nil
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+if group == &amp;quot;raid&amp;quot; and UnitExists(&amp;quot;focus&amp;quot;) then BeaconTarget = &amp;quot;focus&amp;quot; end
+if group == &amp;quot;party&amp;quot; then
+ 	for i = 1, members, 1 do
+    		local member = group..tostring(i)
+		local beacon = UnitBuffID(member, 53563)
+		if beacon ~= nil then BeaconTarget = member end
+    		if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; and UnitIsDead(member) ~= 1 then 
+			BeaconTank = member
+			BeaconTankTarget = 1  
+		end
+  	end
+end
+
+if BeaconTarget ~= nil then
+	local _, _, _, _, _, _, expire = UnitBuffID(BeaconTarget, 53563)
+	expire = (expire  - GetTime())
+	if expire &amp;lt; 5 then
+		CastSpellByID(53563, BeaconTarget)
+	end
+end
+
+if BeaconTankTarget and BeaconTarget == nil then
+	CastSpellByID(53563, BeaconTank)
+end</Lua><RecastDelay>100</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Beacon (Left Alt)</Name><Default>false</Default><SpellID>53563</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() and GetCurrentKeyBoardFocus() == nil then
+	return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PALADIN>

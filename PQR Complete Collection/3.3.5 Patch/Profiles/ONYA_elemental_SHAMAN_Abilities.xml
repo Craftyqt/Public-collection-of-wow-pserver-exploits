@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Elemental: -- defensive spells</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>group = &amp;quot;party&amp;quot;
+members = GetNumPartyMembers()
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+incombat = 1
+incom = UnitAffectingCombat(&amp;quot;player&amp;quot;)
+if ooctimer == nil then ooctimer = 0 end
+if incom == 1 then ooctimerstarted = 0 end
+if incom ~=1 and ooctimerstarted == 0 then
+   ooctimer = GetTime()
+   ooctimerstarted = 1
+ end
+if  (GetTime() - ooctimer &amp;gt; 5) and incom ~= 1 then incombat = 0 end
+
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+local mf = UnitBuffID(&amp;quot;player&amp;quot;, 98734)
+if ((SwG ~= nil ) or ( PQR_IsMoving(0.1) == false) or (mf ~= nil )) then
+ moving = 0
+else 
+  moving = 1
+end
+
+if IsShiftKeyDown()
+or IsMounted()
+or UnitBuffID(&amp;quot;player&amp;quot;,87959)
+or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earth Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,_,_,LSCount = UnitBuffID(&amp;quot;player&amp;quot;, 324)
+local _,lcd =  GetSpellCooldown(8042)
+
+if LSCount&amp;gt;= 7  and lcd == 0  then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(8042)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Elemental Mastery</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(16166)
+if lcd == 0 then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(16166)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Flame Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+local _,lcd =  GetSpellCooldown(8050)
+if lcd == 0 and fsDebuff == nil then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(8050)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: FT weapon</Name><Default>false</Default><SpellID>8024</SpellID><Actions></Actions><Lua>local hasFT = GetWeaponEnchantInfo()
+
+if hasFT ~= 1  then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Lava Burst</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(51505)
+if moving == 0 and lcd == 0   then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(51505)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Lightning Bolt</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+CastSpellByID(403)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Lightning Shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>LS = UnitBuffID(&amp;quot;player&amp;quot;, 324) 
+		
+if LS == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Totems</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, WaterTotem = GetTotemInfo(3)
+local _, FireTotem = GetTotemInfo(1)
+local _, AirTotem = GetTotemInfo(4)
+local _, EarthTotem = GetTotemInfo(2)
+local MQ = UnitBuffID(&amp;quot;player&amp;quot;, 49868)
+local MA = UnitBuffID(&amp;quot;player&amp;quot;, 24907)
+local HP = UnitBuffID(&amp;quot;player&amp;quot;, 53290)
+local IIT = UnitBuffID(&amp;quot;player&amp;quot;, 55610)
+local DA = UnitBuffID(&amp;quot;player&amp;quot;, 465)
+local ST = UnitBuffID(&amp;quot;player&amp;quot;, 8071)
+local BoM = UnitBuffID(&amp;quot;player&amp;quot;, 19740)
+local FI = UnitBuffID(&amp;quot;player&amp;quot;, 54424)
+
+if FireTotem == &amp;quot;&amp;quot; and  AirTotem == &amp;quot;&amp;quot; and EarthTotem == &amp;quot;&amp;quot; and WaterTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(66842)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end
+
+if MQ == nil and MA == nil  then
+  SetMultiCastSpell (136,3738)
+  if AirTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+     CastSpellByID(3738)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+     return true
+  end
+else
+  if HP == nil and IIT == nil  then
+    SetMultiCastSpell (136,8512)
+    if AirTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+       CastSpellByID(8512)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+       return true        
+    end
+  end
+end
+
+if DA == nil then
+  SetMultiCastSpell (134,8071)
+  if EarthTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+     CastSpellByID(8071)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+     return true
+  end
+else
+   SetMultiCastSpell (134,8075)
+   if EarthTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+       CastSpellByID(8075)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+       return true
+   end
+end
+
+if  BoM == nil and FI == nil  then
+  SetMultiCastSpell (135,5675)
+  if WaterTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+     CastSpellByID(5675)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+     return true
+  end
+else 
+  SetMultiCastSpell (135,5394)
+  if WaterTotem == &amp;quot;&amp;quot; and incombat == 1  then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+      CastSpellByID(5394)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+      return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13) == 0 then UseInventoryItem(13) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if  GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14) == 0 then UseInventoryItem(14) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: -- damage spells</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local cc = {33786,2637,55041,3355,6770,2094,5782,6789,64044,6358,5484,5246,8122,118,28272,28271,61305,61025,51514,710,1499,60192}
+local canattack= 1
+for k,v in ipairs(cc) do
+  if UnitDebuffID(&amp;quot;target&amp;quot;,v) then canattack = nil end
+end
+local spell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;player&amp;quot;)
+
+if incombat ~= 1
+or canattack ~= 1
+--- or spell ~= nil
+then return true end
+
+if (UnitIsDead(&amp;quot;target&amp;quot;) or UnitExists(&amp;quot;target&amp;quot;) ~= 1 ) and incombat == 1 then
+  for i = 1, members, 1 do
+    local member = group..tostring(i)
+    if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then
+      RunMacroText(&amp;quot;/target &amp;quot;..member..&amp;quot;target&amp;quot;)
+       return true
+    end
+  end
+end
+
+
+if IsMouseButtonDown() and GetMouseFocus() ~= nil then
+       if GetMouseFocus():GetName() ~= nil then RunMacroText(&amp;quot;/click &amp;quot;..GetMouseFocus():GetName()) end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemenatal: canceltotems</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, WaterTotem = GetTotemInfo(3)
+local _, FireTotem = GetTotemInfo(1)
+local _, AirTotem = GetTotemInfo(4)
+local _, EarthTotem = GetTotemInfo(2)
+
+ if WaterTotem  ~= &amp;quot;Mana Tide Totem&amp;quot; and
+    incombat ~=1 and 
+    ((FireTotem ~= &amp;quot;&amp;quot;) or  (AirTotem ~= &amp;quot;&amp;quot;) or (EarthTotem ~= &amp;quot;&amp;quot;) or (WaterTotem ~= &amp;quot;&amp;quot;)) then
+                CastSpellByID(36936)
+ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Fire Nova</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+local _,lcd =  GetSpellCooldown(1535)
+if lcd == 0 and fsDebuff ~= nil then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(1535)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earthquake</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(61882)
+
+if lcd == 0 and IsControlKeyDown()  and GetCurrentKeyBoardFocus() == nil then
+  CastSpellByID(61882)
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Chain Lightning</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(421)
+if lcd == 0 then
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(421)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Thunderstorm</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local _,lcd =  GetSpellCooldown(51490)
+if lcd == 0 and manapercent &amp;lt; 30 then 
+RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+CastSpellByID(51490)
+RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Searing Totem</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, FireTotem = GetTotemInfo(1)
+SetMultiCastSpell (133,3599)
+if FireTotem == &amp;quot;&amp;quot; and incombat == 1  then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)  
+  CastSpellByID(3599)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Magma Totem</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, FireTotem = GetTotemInfo(1)
+
+SetMultiCastSpell (133,8190)
+if ((FireTotem == &amp;quot;&amp;quot;) or (FireTotem == &amp;quot;Searing Totem&amp;quot;)) and incombat == 1  then
+   RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+   CastSpellByID(8190)
+   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Wind Shear</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local ispell = { &amp;quot;Healing Wave&amp;quot;,&amp;quot;Hex&amp;quot;,&amp;quot;Shock Blast&amp;quot;,&amp;quot;Chain Lightning&amp;quot;,&amp;quot;Shadow Strike&amp;quot;,&amp;quot;Dark Command&amp;quot;,&amp;quot;Confounding Flames&amp;quot;,&amp;quot;Warped Twilight&amp;quot;,&amp;quot;Conjure Twisted Visage&amp;quot;,&amp;quot;Focused Geyser&amp;quot;,&amp;quot;Flame Conduit&amp;quot;,&amp;quot;Chained Mind&amp;quot;,&amp;quot;Umbral Mending&amp;quot;,&amp;quot;Tranquility&amp;quot;,&amp;quot;Pact of Darkness&amp;quot;,&amp;quot;Charged Shot&amp;quot;,&amp;quot;Anti-Magic Prison&amp;quot;,&amp;quot;Reverberating Hymn&amp;quot;,&amp;quot;Summon Sun Orb&amp;quot;,&amp;quot;Inferno Leap&amp;quot;,&amp;quot;Hex&amp;quot;,&amp;quot;Ritual of Bloodletting&amp;quot;,&amp;quot;Chain Lightning&amp;quot;,&amp;quot;Lightning Lash&amp;quot;,&amp;quot;Greater Heal&amp;quot;,&amp;quot;Cloudburst&amp;quot;,&amp;quot;Force of Earth&amp;quot;,&amp;quot;Magma Eruption&amp;quot;,&amp;quot;Demon Portal&amp;quot;,&amp;quot;Force Grip&amp;quot;,&amp;quot;Holy Fire&amp;quot;,&amp;quot;Motivate&amp;quot;,&amp;quot;Seaswell&amp;quot;,&amp;quot;Fear&amp;quot;,&amp;quot;Drain Life&amp;quot;,&amp;quot;Pain and Suffering&amp;quot;,&amp;quot;Unholy Empowerment&amp;quot;,&amp;quot;Cursed Bullets&amp;quot;,&amp;quot;Fireball Volley&amp;quot;,&amp;quot;Ancient Power&amp;quot;,&amp;quot;Heal&amp;quot;,&amp;quot;Holy Light&amp;quot;,&amp;quot;Healing Wave&amp;quot;,&amp;quot;Flash Heal&amp;quot;,&amp;quot;Ancient Power&amp;quot;,&amp;quot;Blood Leech&amp;quot;,&amp;quot;Whispers of Hethiss&amp;quot;,&amp;quot;Tears of Blood&amp;quot;,&amp;quot;Fieroblast&amp;quot;}
+local _,lcd =  GetSpellCooldown(57994)
+if lcd == 0 then
+for i = 0, members, 1 do
+  if i==0 then mem = &amp;quot;player&amp;quot; else mem = group..tostring(i) end
+   local meminrange = UnitInRange(mem)
+   if meminrange then
+     local wsinrange = IsSpellInRange(&amp;quot;Wind Shear&amp;quot;, mem..&amp;quot;target&amp;quot;)
+     if UnitIsEnemy(&amp;quot;player&amp;quot;,mem..&amp;quot;target&amp;quot;) and wsinrange == 1 then
+       local canint= 0
+       local spell, _, _, _, _, _, _, _, interrupt = UnitChannelInfo(mem..&amp;quot;target&amp;quot;)
+       if not interupt then 
+         for k,v in ipairs(ispell) do        
+           if spell == v then canint = 1 end
+         end
+       end
+       local spell, _, _, _, _, _, _, _, interrupt = UnitCastingInfo(mem..&amp;quot;target&amp;quot;)
+       if not interupt then 
+         for k,v in ipairs(ispell) do        
+           if spell == v then canint = 1 end
+         end
+       end
+       if canint == 1 and incombat ~= nil then
+          RunMacroText(&amp;quot;/stopcasting&amp;quot;)
+           RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+           CastSpellByID(57994,mem..&amp;quot;target&amp;quot;)
+           RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+      end
+  end
+end
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Purge</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff= { 97987,43242,43421 }
+  for i = 0, members, 1 do
+    if i==0 then purgetarget = &amp;quot;target&amp;quot; else purgetarget = group..tostring(i)..&amp;quot;target&amp;quot; end
+     local purgeinrange = IsSpellInRange(&amp;quot;Purge&amp;quot;, purgetarget)
+      if UnitIsEnemy(&amp;quot;player&amp;quot;,purgetarget) and purgeinrange == 1 then
+        local canpurge= 0
+        for k,v in ipairs(buff) do
+          if UnitBuffID(purgetarget,v) then canpurge = 1 end
+        end
+        if canpurge == 1 and incombat ~= nil then
+           RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+           CastSpellByID(370,purgetarget)
+           RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+          return true
+        end
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></SHAMAN>

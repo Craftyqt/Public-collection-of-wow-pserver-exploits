@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Ability><Name>[Misc] Initialization</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-------------------------------------------------------------------------------
+-- Variables &amp; Sanity checks
+-------------------------------------------------------------------------------
+-- Load LUA data files.
+if PQR_RotationStarted then
+	PQR_RotationStarted = false
+
+	if PQR_LoadLua ~= nil then
+		if PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) == false then
+			PQR_WriteToChat(&amp;quot;|cffb73737You&amp;apos;re missing PQR_Nova_Data.lua - Make sure it&amp;apos;s in your Data folder! The Rotation has been halted.|cffffffff&amp;quot;, &amp;quot;Error&amp;quot;)
+			PQR_StopRotation()
+			return true
+		end
+	end
+end
+
+-- Cooldown toggle function
+if not SCDtimer then SCDtimer = 0 end
+if not SCD then SCD = false end
+if SCD then
+	PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Cooldown Mode: Manual&amp;quot;, nil, &amp;quot;DC143C&amp;quot;)
+else
+	PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Cooldown Mode: Automatic&amp;quot;, nil, &amp;quot;79BAEC&amp;quot;)
+end
+
+if not SCDtimer then SCDtimer = 0 end
+if IsLeftShiftKeyDown() and not GetCurrentKeyBoardFocus() and GetTime() - SCDtimer &amp;gt; 1 then
+	SCDtimer = GetTime()
+	
+	if SCD then
+		SCD = false
+		PQR_WriteToChat(&amp;quot;|cff347C2CCooldown Mode: |cff79BAECAutomatic|cffffffff&amp;quot;, &amp;quot;Notice&amp;quot;)
+	else
+		SCD = true
+		PQR_WriteToChat(&amp;quot;|cff347C2CCooldown Mode: |cffDC143CManual|cffffffff&amp;quot;, &amp;quot;Notice&amp;quot;)
+	end
+end
+
+-- Variables
+PQR_ResetMovementTime = 0.3
+PQR_SpellAvailableTime = ((select(3,GetNetStats()) + select(4,GetNetStats())) / 1000)
+
+-- Icy Veins Glyph check
+for i=1,6 do
+	if select(4,GetGlyphSocketInfo(i)) == 56364 then IVglyph = true else IVglyph = false end
+end
+
+-- Don&amp;apos;t automatically start if we&amp;apos;re mounted.
+if IsMounted() then return true end
+
+-- At this point, everything should have loaded perfectly!
+if not PQ_MageLoaded then
+	local MCFrame = CreateFrame(&amp;quot;Frame&amp;quot;)
+	MCFrame:RegisterEvent(&amp;quot;COMBAT_LOG_EVENT_UNFILTERED&amp;quot;)
+	MCFrame:SetScript(&amp;quot;OnEvent&amp;quot;, MCFrame_OnEvent)
+	MCFrame:Show()
+	
+	Trinket = 0
+	LivingBomb = 0
+	
+	PQ_MageLoaded = true
+	PQR_WriteToChat(&amp;quot;|cff91e782Nova Frost Mage data is |cff82cee7Loaded!|cffffffff&amp;quot;)
+	PQR_WriteToChat(&amp;quot;---------------------------------------------&amp;quot;)
+	PQR_WriteToChat(&amp;quot;|cff82C0E7Special thanks to those who Donated! If you appreciate my work, please consider repping me on OwnedCore.|cffffffff&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Automatic Buffing</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_FA = PQ_FA
+local PQ_ABril = PQ_ABril
+local PQ_AuraInfo = PQ_AuraInfo
+
+if not PQ_AuraInfo(5,&amp;quot;player&amp;quot;) then CastSpellByName(GetSpellInfo(PQ_ABril),&amp;quot;player&amp;quot;) return true end
+if not PQ_AuraInfo(7,&amp;quot;player&amp;quot;) then CastSpellByName(GetSpellInfo(PQ_ABril),&amp;quot;player&amp;quot;) return true end
+
+if not UnitBuffID(&amp;quot;player&amp;quot;,PQ_FA) then
+	CastSpellByName(GetSpellInfo(PQ_FA),&amp;quot;player&amp;quot;)
+	return true
+else
+	if UnitCastingInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(PQ_FA)
+	then SpellStopCasting() return true end
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Scorch</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Scorch = PQ_Scorch
+local TargetValidation = TargetValidation
+
+if PQR_IsMoving(0.3) then
+	if TargetValidation(&amp;quot;target&amp;quot;,PQ_Scorch) then
+		CastSpellByName(GetSpellInfo(PQ_Scorch),&amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>200</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mage Bomb</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_LB = PQ_LB
+local PQ_NT = PQ_NT
+local Nova_Spell = Nova_Spell
+local PQ_FrostBomb = PQ_FrostBomb
+local TargetValidation = TargetValidation
+
+if Nova_Spell[PQ_LB].known then
+	if TargetValidation(&amp;quot;target&amp;quot;,PQ_LB) and not UnitDebuffID(&amp;quot;target&amp;quot;,PQ_LB,&amp;quot;PLAYER&amp;quot;) then
+		if LivingBomb &amp;lt; 3 then
+			CastSpellByName(GetSpellInfo(PQ_LB),&amp;quot;target&amp;quot;)
+			return true
+		end
+	end
+end
+
+if Nova_Spell[PQ_NT].known then
+	local NT,_,_,_,_,_,NTtimer = UnitDebuffID(&amp;quot;target&amp;quot;,PQ_NT,&amp;quot;PLAYER&amp;quot;)
+	
+	if UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_SpellAvailable(PQ_NT)
+	and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) == 1
+	and not UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+	and not PQR_IsOutOfSight(&amp;quot;target&amp;quot;, 1) then
+		if NT then
+			if NTtimer - GetTime() &amp;lt;= 3 then
+				CastSpellByName(GetSpellInfo(PQ_NT),&amp;quot;target&amp;quot;)
+				return true
+			end
+		else CastSpellByName(GetSpellInfo(PQ_NT),&amp;quot;target&amp;quot;) return true end
+	end
+end
+
+if Nova_Spell[PQ_FrostBomb].known then
+	if PQR_IsMoving(0.3) then return false end
+	if UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_SpellAvailable(PQ_FrostBomb)
+	and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) == 1
+	and not UnitIsDeadOrGhost(&amp;quot;target&amp;quot;)
+	and not PQR_IsOutOfSight(&amp;quot;target&amp;quot;, 1) then
+		CastSpellByName(GetSpellInfo(PQ_FrostBomb),&amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mage Bomb (Mouseover)</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_LB = PQ_LB
+local PQ_NT = PQ_NT
+local Nova_Spell = Nova_Spell
+local PQ_FrostBomb = PQ_FrostBomb
+local TargetValidation = TargetValidation
+
+if Nova_Spell[PQ_LB].known then
+	if TargetValidation(&amp;quot;mouseover&amp;quot;,PQ_LB) and not UnitDebuffID(&amp;quot;mouseover&amp;quot;,PQ_LB,&amp;quot;PLAYER&amp;quot;) then
+		if LivingBomb &amp;lt; 3 then
+			CastSpellByName(GetSpellInfo(PQ_LB),&amp;quot;mouseover&amp;quot;)
+			return true
+		end
+	end
+end
+
+if Nova_Spell[PQ_NT].known then
+	local NT,_,_,_,_,_,NTtimer = UnitDebuffID(&amp;quot;mouseover&amp;quot;,PQ_NT,&amp;quot;PLAYER&amp;quot;)
+	
+	if UnitExists(&amp;quot;mouseover&amp;quot;)
+	and PQR_SpellAvailable(PQ_NT)
+	and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) == 1
+	and not UnitIsDeadOrGhost(&amp;quot;mouseover&amp;quot;)
+	and not PQR_IsOutOfSight(&amp;quot;mouseover&amp;quot;, 1) then
+		if NT then
+			if NTtimer - GetTime() &amp;lt;= 3 then
+				CastSpellByName(GetSpellInfo(PQ_NT),&amp;quot;mouseover&amp;quot;)
+				return true
+			end
+		else CastSpellByName(GetSpellInfo(PQ_NT),&amp;quot;mouseover&amp;quot;) return true end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Pet Management</Name><Default>false</Default><SpellID>31687</SpellID><Actions></Actions><Lua>local PQ_WElm = PQ_WElm
+if GetSpecialization() == 3 then
+	if UnitExists(&amp;quot;pet&amp;quot;) and UnitChannelInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(PQ_WElm) then SpellStopCasting() end
+	if not UnitExists(&amp;quot;pet&amp;quot;) then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mirror Image</Name><Default>false</Default><SpellID>0</SpellID><Actions>/use 13|/use 14|/use 10|/script UIErrorsFrame:Clear()</Actions><Lua>local PQ_MI = PQ_MI
+local SCD = SCD
+local SpecialUnit = SpecialUnit
+local PQ_Frostbolt = PQ_Frostbolt
+local TargetValidation = TargetValidation
+
+if TargetValidation(&amp;quot;target&amp;quot;,PQ_Frostbolt) and PQR_SpellAvailable(PQ_MI) then
+	if SpecialUnit() and not SCD then
+		CastSpellByName(GetSpellInfo(PQ_MI),&amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Instance: Combat Detection</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsInInstance() then
+	if (not UnitAffectingCombat(&amp;quot;player&amp;quot;) and UnitExists(&amp;quot;boss1&amp;quot;))
+		or not UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Alter Time</Name><Default>false</Default><SpellID>108978</SpellID><Actions></Actions><Lua>local PQ_MI = PQ_MI
+local PQ_IV = PQ_IV
+local PQ_AT = PQ_AT
+local PQ_FoF = PQ_FoF
+local SCD = SCD
+local PQ_BrainF = PQ_BrainF
+local Nova_Spell = Nova_Spell
+local PQ_HasHero = PQ_HasHero
+local SpecialUnit = SpecialUnit
+
+if Nova_Spell[PQ_AT].known and not SCD and SpecialUnit() and not PQR_SpellAvailable(PQ_IV) then
+	if UnitBuffID(&amp;quot;player&amp;quot;,PQ_BrainF)
+		and (select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) and select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) &amp;gt; 1)
+		and UnitBuffID(&amp;quot;player&amp;quot;,PQ_IV)
+		and Trinket &amp;gt;= 1
+	then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Level 90 Talent</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Evo = PQ_Evo
+local PQ_RoP = PQ_RoP
+local PQ_Invo = PQ_Invo
+local PQ_Ward = PQ_Ward
+local Nova_Spell = Nova_Spell
+
+if Nova_Spell[PQ_Invo].known then
+	if PQR_IsMoving(0.1) then return false end
+	
+	if PQR_SpellAvailable(PQ_Evo)
+		and IsRightControlKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_Evo),&amp;quot;player&amp;quot;)
+		return true
+	end
+end
+
+if Nova_Spell[PQ_RoP].known then
+	if PQR_IsMoving(0.1) then return false end
+	
+	if PQR_SpellAvailable(PQ_RoP)
+		and IsRightControlKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_RoP),nil)
+		if SpellIsTargeting() then SpellCancelQueuedSpell() CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+		return true
+	end
+end
+
+if Nova_Spell[PQ_Ward].known then
+	if PQR_SpellAvailable(PQ_Ward)
+		and IsRightControlKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_Ward),&amp;quot;player&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Mana Gem</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Invo = PQ_Invo
+local Nova_Spell = Nova_Spell
+local Nova_UnitInfo = Nova_UnitInfo
+
+for i=1,6 do
+	if select(4,GetGlyphSocketInfo(i)) == 56383 then improvedGem = true else improvedGem = false end
+end
+
+-- Loop all current glyphs
+if Nova_Spell[PQ_Invo].known then return false else
+		if improvedGem then
+			if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+				if GetItemCount(81901,false,true) &amp;gt; 0 and select(3,Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 74 and GetItemCooldown(81901) == 0 then
+					UseItemByName(81901)
+					return true
+				end
+			else
+				if UnitCastingInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(119316) then return false end
+				if GetItemCount(81901,false,true) &amp;lt;= 5 then
+					CastSpellByName(GetSpellInfo(119316),&amp;quot;player&amp;quot;)
+					return true
+				end
+			end
+		else
+			if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+				if GetItemCount(36799,false,true) &amp;gt; 0 and select(3,Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 74 and GetItemCooldown(36799) == 0 then
+					UseItemByName(36799)
+					return true
+				end
+			else
+				if UnitCastingInfo(&amp;quot;player&amp;quot;) == GetSpellInfo(759) then return false end
+				if GetItemCount(36799,false,true) &amp;lt;= 2 then
+					CastSpellByName(GetSpellInfo(759),&amp;quot;player&amp;quot;)
+					return true
+				end
+			end
+		end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Level 45 Talent</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_FJ = PQ_FJ
+local PQ_IW = PQ_IW
+local PQ_RoF = PQ_RoF
+local Nova_Spell = Nova_Spell
+
+if Nova_Spell[PQ_FJ].known then
+	if PQR_IsMoving(0.1) then return false end
+	
+	if PQR_SpellAvailable(PQ_FJ)
+		and IsRightAltKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_FJ),&amp;quot;target&amp;quot;)
+		return true
+	end
+end
+
+if Nova_Spell[PQ_IW].known then
+	if PQR_IsMoving(0.1) then return false end
+	
+	if PQR_SpellAvailable(PQ_IW)
+		and IsRightAltKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_IW),&amp;quot;target&amp;quot;)
+		return true
+	end
+end
+
+if Nova_Spell[PQ_RoF].known then
+	if PQR_IsMoving(0.1) then return false end
+	
+	if PQR_SpellAvailable(PQ_RoF)
+		and IsRightAltKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_RoF),nil)
+		if SpellIsTargeting() then SpellCancelQueuedSpell() CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Pause Rotation</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() and not GetCurrentKeyBoardFocus() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Level 30 Talent</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Barrier = PQ_Barrier
+local Nova_Spell = Nova_Spell
+local PQ_Temporal = PQ_Temporal
+
+if Nova_Spell[PQ_Barrier].known then
+	if PQR_SpellAvailable(PQ_Barrier)
+		and IsRightShiftKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_Barrier),&amp;quot;player&amp;quot;)
+		return true
+	end
+end
+
+if Nova_Spell[PQ_Temporal].known then
+	if PQR_SpellAvailable(PQ_Temporal)
+		and IsRightShiftKeyDown()
+		and not GetCurrentKeyBoardFocus()
+	then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(PQ_Temporal),&amp;quot;player&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Healthstone</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetItemCount(5512,false,true) &amp;gt; 0
+	and Nova_UnitInfo(&amp;quot;player&amp;quot;) &amp;lt; 40
+	and PQR_SpellAvailable(5512)
+	and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	and GetItemCooldown(5512) == 0
+then
+	UseItemByName(5512)
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_MI = PQ_MI
+local PQ_HasHero = PQ_HasHero
+local Nova_UnitInfo = Nova_UnitInfo
+
+-- Troll: Berserking
+if IsPlayerSpell(26297) then
+	if not PQ_HasHero and PQR_SpellAvailable(PQ_MI) and PQR_SpellAvailable(26297) then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(26297),&amp;quot;player&amp;quot;)
+		return true
+	end
+end
+
+-- Blood Elf: Arcane Torrent
+if IsPlayerSpell(28730) then
+	if PQR_SpellAvailable(28730) and select(3,Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 95 then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(28730),&amp;quot;player&amp;quot;)
+		return true
+	end
+end
+
+-- Orc: Blood Fury
+if IsPlayerSpell(33702) then
+	if PQR_SpellAvailable(33702) and (PQR_SpellAvailable(PQ_MI) or PQ_HasHero()) then
+		SpellCancelQueuedSpell()
+		CastSpellByName(GetSpellInfo(33702),&amp;quot;player&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Misc] Alchemy: Lifeblood</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local SpecialUnit = SpecialUnit
+local PQ_HasHero = PQ_HasHero
+-- Herbalism&amp;apos;s Lifeblood
+PQ_Lifeblood = {81708,74497,121279,55428,55480,55500,55501,55502,55503}
+
+for i=1,#PQ_Lifeblood do
+	if IsPlayerSpell(PQ_Lifeblood[i])
+		and PQR_SpellAvailable(PQ_Lifeblood[i])
+		and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+		and SpecialUnit()
+		and not PQ_HasHero()
+	then
+			CastSpellByName(GetSpellInfo(PQ_Lifeblood[i]),&amp;quot;player&amp;quot;)
+			return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Frostbolt (Debuff)</Name><Default>false</Default><SpellID>116</SpellID><Actions></Actions><Lua>local PQ_Frostbolt = PQ_Frostbolt
+local TargetValidation = TargetValidation
+local fbDebuff,_,_,fbCount = UnitDebuffID(&amp;quot;target&amp;quot;,PQ_Frostbolt)
+
+if PQR_IsMoving(0.3) then return false end
+
+if TargetValidation(&amp;quot;target&amp;quot;,PQ_Frostbolt) then
+	if fbDebuff then
+		if fbCount &amp;lt; 3 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Frozen Orb</Name><Default>false</Default><SpellID>84714</SpellID><Actions></Actions><Lua>local PQ_FO = PQ_FO
+local SCD = SCD
+local SpecialUnit = SpecialUnit
+local TargetValidation = TargetValidation
+local Nova_Spell = Nova_Spell
+
+if Nova_Spell[PQ_FO].known
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+	and not SCD
+	and SpecialUnit()
+	and not PQR_IsMoving(0.3)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>[Pet] Freeze</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Freeze = PQ_Freeze
+local Nova_Spell = Nova_Spell
+
+if UnitExists(&amp;quot;pet&amp;quot;) then
+	if PQR_SpellAvailable(PQ_Freeze)
+		and IsLeftControlKeyDown()
+		and not GetCurrentKeyBoardFocus() then
+			SpellCancelQueuedSpell()
+			CastSpellByName(GetSpellInfo(PQ_Freeze),nil)
+			if SpellIsTargeting() then SpellCancelQueuedSpell() CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+			return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Frostfire Bolt</Name><Default>false</Default><SpellID>44614</SpellID><Actions></Actions><Lua>local PQ_IV = PQ_IV
+local PQ_AT = PQ_AT
+local SCD = SCD
+local PQ_FFB = PQ_FFB
+local PQ_BrainF = PQ_BrainF
+local SpecialUnit = SpecialUnit
+local TargetValidation = TargetValidation
+
+if TargetValidation(&amp;quot;target&amp;quot;,PQ_FFB) then
+	if UnitBuffID(&amp;quot;player&amp;quot;,PQ_BrainF) then
+		if SCD or not SpecialUnit() then return true else
+			if PQR_SpellAvailable(PQ_AT) and PQR_SpellAvailable(PQ_IV) then return false else return true end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Ice Lance</Name><Default>false</Default><SpellID>30455</SpellID><Actions></Actions><Lua>local PQ_IV = PQ_IV
+local PQ_AT = PQ_AT
+local PQ_IL = PQ_IL
+local SCD = SCD
+local PQ_FoF = PQ_FoF
+local SpecialUnit = SpecialUnit
+local TargetValidation = TargetValidation
+
+if TargetValidation(&amp;quot;target&amp;quot;,PQ_IL) then
+	if UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF) then
+		if SCD or not SpecialUnit() then return true else
+			if PQR_SpellAvailable(PQ_AT) and PQR_SpellAvailable(PQ_IV) then return false else return true end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Frostbolt</Name><Default>false</Default><SpellID>116</SpellID><Actions></Actions><Lua>local PQ_POM = PQ_POM
+local Nova_Spell = Nova_Spell
+local PQ_Frostbolt = PQ_Frostbolt
+local TargetValidation = TargetValidation
+
+if PQR_IsMoving(0.3) then return false end
+if TargetValidation(&amp;quot;target&amp;quot;,PQ_Frostbolt) then
+	if Nova_Spell[PQ_POM].known and not SCD and PQR_SpellAvailable(PQ_POM) then
+		CastSpellByName(GetSpellInfo(PQ_POM),&amp;quot;player&amp;quot;)
+	end
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Icy Veins</Name><Default>false</Default><SpellID>12472</SpellID><Actions></Actions><Lua>local PQ_IV = PQ_IV
+local PQ_MI = PQ_MI
+local PQ_AT = PQ_AT
+local SCD = SCD
+local PQ_FoF = PQ_FoF
+local PQ_BrainF = PQ_BrainF
+local Nova_Spell = Nova_Spell
+local PQ_HasHero = PQ_HasHero
+local SpecialUnit = SpecialUnit
+
+if Nova_Spell[PQ_IV].known and not SCD and SpecialUnit() then
+	if not IVglyph then
+		if PQ_HasHero() then return false end
+		
+		if UnitBuffID(&amp;quot;player&amp;quot;,PQ_BrainF)
+			and (select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) and select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) &amp;gt; 1)
+			and Trinket &amp;gt;= 1
+			and PQR_SpellAvailable(PQ_AT)
+		then return true end
+	else
+		if UnitBuffID(&amp;quot;player&amp;quot;,PQ_BrainF)
+			and (select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) and select(4,UnitBuffID(&amp;quot;player&amp;quot;,PQ_FoF)) &amp;gt; 1)
+			and Trinket &amp;gt;= 1
+			and PQR_SpellAvailable(PQ_AT)
+		then return true end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Blizzard</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_Blizzard = PQ_Blizzard
+local Nova_Spell = Nova_Spell
+
+if Nova_Spell[PQ_Blizzard].known then
+	if PQR_SpellAvailable(PQ_Blizzard)
+	and IsLeftControlKeyDown()
+	and not GetCurrentKeyBoardFocus() then
+		CastSpellByName(GetSpellInfo(PQ_Blizzard),nil)
+		if SpellIsTargeting() then SpellCancelQueuedSpell() CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Flamestrike</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQ_FS = PQ_FS
+local Nova_Spell = Nova_Spell
+
+if Nova_Spell[PQ_FS].known then
+	if PQR_SpellAvailable(PQ_FS)
+		and IsLeftControlKeyDown()
+		and not GetCurrentKeyBoardFocus() then
+			SpellCancelQueuedSpell()
+			CastSpellByName(GetSpellInfo(PQ_FS),nil)
+			if SpellIsTargeting() then SpellCancelQueuedSpell() CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+			return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></MAGE>

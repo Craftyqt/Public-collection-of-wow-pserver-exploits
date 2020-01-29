@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>PW: Shield</Name><Default>false</Default><SpellID>17</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(17) then
+--	for i=1, #members do
+		if members[1].HP &amp;lt; 80 
+		 and UnitDetailedThreatSituation(members[1].Unit, members[1].Unit..&amp;quot;target&amp;quot;)
+		 and not UnitDebuffID(members[1].Unit, 6788)
+		 and not UnitBuffID(members[1].Unit, 17)then
+			PQR_CustomTarget = members[1].Unit
+			return true
+		end
+--	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Prayer of Mending</Name><Default>false</Default><SpellID>33076</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(33076) then
+	if members[1].HP &amp;lt; 70
+	 and not UnitBuffID(members[1].Unit, 33076) 
+	 and lowhpmembers &amp;gt;= 3 then
+		PQR_CustomTarget = members[1].Unit
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Buffs</Name><Default>false</Default><SpellID>21562</SpellID><Actions></Actions><Lua>if Nova_Pause(6) then
+	if GetTime() - Nova_Timer &amp;gt; 1 then
+		Nova_Timer = GetTime()
+		if not GetCVarBool(&amp;quot;Nova_Inner&amp;quot;) then
+			SetCVar(&amp;quot;Nova_Inner&amp;quot;, 1)
+			PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Inner Fire&amp;quot;, nil, &amp;quot;00FF00&amp;quot;)
+			return false
+		elseif GetCVarBool(&amp;quot;Nova_Inner&amp;quot;) then
+			SetCVar(&amp;quot;Nova_Inner&amp;quot;, 0)
+			PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Inner Will&amp;quot;, nil, &amp;quot;00FF00&amp;quot;)
+			return false
+		else
+			SetCVar(&amp;quot;Nova_Inner&amp;quot;, 0)
+			return false
+		end
+	end
+end
+
+if GetCVarBool(&amp;quot;Nova_Inner&amp;quot;) then
+	if not UnitBuffID(&amp;quot;player&amp;quot;, 588) then 
+		CastSpellByID(588, &amp;quot;player&amp;quot;)
+	end
+elseif not GetCVarBool(&amp;quot;Nova_Inner&amp;quot;) then
+	if not UnitBuffID(&amp;quot;player&amp;quot;, 73413) then
+		CastSpellByID(73413, &amp;quot;player&amp;quot;)
+	end
+end
+
+--[[for i=1, #members do
+	if not UnitBuffID(members[i].Unit, 21562) then
+		PQR_CustomTarget = members[i].Unit
+	--	return true
+	end
+end]]--</Lua><RecastDelay>1000</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>PW: Barrier</Name><Default>false</Default><SpellID>62618</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(62618) then
+	if Nova_Pause(2) and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+		CastSpellByName(GetSpellInfo(62618))
+		if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+		return true 
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Pain Suppression</Name><Default>false</Default><SpellID>33206</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(33206) then
+	if UnitDetailedThreatSituation(members[1].Unit, members[1].Unit..&amp;quot;target&amp;quot;)
+	 and members[1].HP &amp;lt; 40 then
+	 	PQR_CustomTarget = members[1].Unit
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Penance</Name><Default>false</Default><SpellID>47540</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(47540) then
+	PriestGlyphCheck()
+	if not PenanceGlyph then
+		if PQR_IsMoving() then
+			return false
+		end
+	end
+	
+	if members[1].HP &amp;lt; 60 then
+		PQR_CustomTarget = members[1].Unit
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Archangel</Name><Default>false</Default><SpellID>81700</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(81700) then
+	if members[1].HP &amp;lt; 70 then
+		if UnitBuffID(&amp;quot;player&amp;quot;, 81661) and select(4, UnitBuffID(&amp;quot;player&amp;quot;, 81661)) &amp;gt;= 5 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Leap of Faith</Name><Default>false</Default><SpellID>73325</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(73325) then
+	if Nova_Pause(3)
+	 and UnitCanCooperate(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;)
+	 and IsSpellInRange(GetSpellInfo(73325) ,&amp;quot;mouseover&amp;quot;) == 1 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mind Sear</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Smite</Name><Default>false</Default><SpellID>585</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	if PQR_SpellAvailable(585)
+	 and not PQR_IsMoving() 
+	 and UnitExists(&amp;quot;target&amp;quot;) then
+		if members[1].HP &amp;gt;= 70  
+		 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+			if UnitBuffID(&amp;quot;player&amp;quot;, 81661) then
+				if select(4, UnitBuffID(&amp;quot;player&amp;quot;, 81661)) &amp;lt;= 4 then
+					return true
+				elseif select(7, UnitBuffID(&amp;quot;player&amp;quot;, 81661)) - GetTime() &amp;lt; 3 then
+					return true
+				end
+			elseif not UnitBuffID(&amp;quot;player&amp;quot;, 81661) then
+				return true
+		elseif members[1].HP &amp;lt; 99
+		 and members[1].HP &amp;gt;= 70  
+		 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+		 	return true
+			end
+		end
+	end
+end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Psychic Scream</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Renew</Name><Default>false</Default><SpellID>139</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Prayer of Healing</Name><Default>false</Default><SpellID>596</SpellID><Actions></Actions><Lua>GetDistance()
+
+
+
+local PerfectAoETarget = {}
+for i=1, #members do
+	table.insert(PerfectAoETarget, {NumberNearby = UnitsClose(members[i].Unit, 75), Unit = members[i].Unit} )
+end
+
+
+table.sort(PerfectAoETarget, function(x,y) return x.NumberNearby &amp;gt; y.NumberNearby end)
+
+
+if PerfectAoETarget[1].NumberNearby &amp;gt;= 4 then
+	PQR_CustomTarget = PerfectAoETarget[1].Unit
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shadowfiend</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(34433)
+ and not IsPlayerSpell(123040)
+ and UnitExists(&amp;quot;target&amp;quot;) then
+	if UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+	 and select(3, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 50 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shackle</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Binding Heal</Name><Default>false</Default><SpellID>32546</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(32546) 
+ and not PQR_IsMoving() then
+	if UnitIsUnit(&amp;quot;player&amp;quot;, members[1].Unit) then
+		if #members &amp;gt;= 2 
+		 and members[2].HP &amp;lt; 80 
+		 and members[1].HP &amp;lt; 80 then
+			PQR_CustomTarget = members[2].Unit
+			return true
+		end
+	elseif members[1].HP &amp;lt; 75 and CalculateHP(&amp;quot;player&amp;quot;) &amp;lt; 80 then
+		PQR_CustomTarget = members[1].Unit
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Fade</Name><Default>false</Default><SpellID>586</SpellID><Actions></Actions><Lua>if CalculateHP(&amp;quot;player&amp;quot;) &amp;lt; 81 
+ and UnitExists(&amp;quot;target&amp;quot;)
+ and UnitDetailedThreatSituation(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Heal</Name><Default>false</Default><SpellID>2050</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(2050) 
+ and not PQR_IsMoving() then
+	if members[1].HP &amp;lt; 85 
+	 and ( not UnitExists(&amp;quot;target&amp;quot;)
+	 or not UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	 or not UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) ) then 
+		PQR_CustomTarget = members[1].Unit
+	 	return true
+	 elseif members[1].HP &amp;lt; 70 then
+	 	PQR_CustomTarget = members[1].Unit
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Flash Heal</Name><Default>false</Default><SpellID>2061</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(2061) 
+ and not PQR_IsMoving() then
+	if UnitBuffID(&amp;quot;player&amp;quot;, 114255) then
+		if members[1].HP &amp;lt; 72 then
+			PQR_CustomTarget = members[1].Unit
+			return true
+		end
+	elseif members[1].HP &amp;lt; 28 then 
+		PQR_CustomTarget = members[1].Unit
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Fear Ward</Name><Default>false</Default><SpellID>6346</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Holy Fire</Name><Default>false</Default><SpellID>14914</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) then	
+	if PQR_SpellAvailable(14914) 
+	 and UnitExists(&amp;quot;target&amp;quot;) then
+		PriestGlyphCheck()
+		if not HolyFireGlyph then
+			if PQR_IsMoving() then
+				return false
+			end
+		end
+	
+		if members[1].HP &amp;lt; 90 
+		 and PQR_UnitFacing(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+			return true
+		else
+			return false
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Greater Heal</Name><Default>false</Default><SpellID>2060</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(2060) 
+ and not PQR_IsMoving() then
+	if members[1].HP &amp;lt; 50 	 
+	 and ( not UnitExists(&amp;quot;target&amp;quot;)
+	 or not UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	 or not UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) ) then  
+		PQR_CustomTarget = members[1].Unit
+	 	return true
+	elseif members[1].HP &amp;lt; 45 then
+		PQR_CustomTarget = members[1].Unit
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Inner Focus</Name><Default>false</Default><SpellID>89485</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(89485) then
+	if lowhpmembers &amp;gt;= 4
+	 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Dispel Magic</Name><Default>false</Default><SpellID>528</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(528)
+ and not PQR_IsMoving() then
+	for i=1, 40 do
+		if UnitBuff(&amp;quot;target&amp;quot;, i) 
+		 and select(5, UnitBuff(&amp;quot;target&amp;quot;, i)) == &amp;quot;magic&amp;quot; 
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shackle Undead</Name><Default>false</Default><SpellID>9484</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Healing Variants</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitLevel(&amp;quot;player&amp;quot;) = 85 
+	and not UnitisDeadorGhost(&amp;quot;player&amp;quot;)
+--If we are healing a 5-Man
+if IsInInsance() and select(2, GetInstanceInfo()) = &amp;quot;party&amp;quot;
+	then PQR_SwapRotation(&amp;quot;5 Man (Nova [Disc])&amp;quot;)
+elseif IsInInstance() and (2, GetInstantInfo() = &amp;quot;raid&amp;quot;)
+	then PQR_SwapRotation(&amp;quot;10-Player (Nova [Disc])&amp;quot;)
+elseif IsInInstance() and (2, GetInstanceInfo() = &amp;quot;pvp&amp;quot;)
+	then PQR_SwapRotation(&amp;quot;PVP (Nova [Disc])&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Data FIle Info --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then 
+	PQR_RotationStarted = false
+	PQR_WriteToChat(&amp;quot;|cffffffff Disc Priest Profile Version - |cff1919ff 1.1.0&amp;quot;)
+
+	if not PQR_LoadLua(&amp;quot;PQR_Nova_Data.lua&amp;quot;) then
+		PQR_WriteToChat(&amp;quot;You are missing PQR_Nova_Data.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
+		PQR_StopRotation()
+		return true
+	end
+	
+	PQR_Event(&amp;quot;PQR_Text&amp;quot;, &amp;quot;Priest Profile Verions - 1.1&amp;quot;, nil, &amp;quot;00FF00&amp;quot;)
+	
+	Nova_Timer = GetTime()
+	
+	PenanceGlyph = false
+	HolyFireGlyph = false
+	
+	function PriestGlyphCheck()
+		for i=1, 6 do
+			if select(4, GetGlyphSocketInfo(i)) == 119866 then
+				PenanceGlyph = true
+			elseif select(4, GetGlyphSocketInfo(i)) == 119853 then
+				HolyFireGlyph = true
+			end
+		end
+	end
+
+--------------------
+-- Register CVars
+--------------------
+if GetCVar(&amp;quot;Nova_Inner&amp;quot;) == nil then RegisterCVar(&amp;quot;Nova_Inner&amp;quot;, 0) end
+if GetCVar(&amp;quot;Nova_Smite&amp;quot;) == nil then RegisterCVar(&amp;quot;Nova_Smite&amp;quot;, 1) end
+
+-- Variables
+PQR_ResetMovementTime = 0.3
+PQR_SpellAvailableTime = ((select(3,GetNetStats()) + select(4,GetNetStats())) / 1000)
+
+
+end
+
+SheuronEngine(false)
+
+
+
+if IsMounted() or Nova_Pause(1) then return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mindbender</Name><Default>false</Default><SpellID>123040</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(34433) 
+ and IsPlayerSpell(123040) 
+ and UnitExists(&amp;quot;target&amp;quot;) then
+	if UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	 and select(3, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 80 then
+		CastSpellByName(GetSpellInfo(123040), &amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Pet Support</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;pet&amp;quot;) then
+	if not UnitExists(&amp;quot;pettarget&amp;quot;) then
+		if UnitExists(&amp;quot;target&amp;quot;)
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+		 and UnitAffectingCombat(&amp;quot;target&amp;quot;) then
+		 	PetAttack()
+		elseif UnitExists(members[1].Unit..&amp;quot;target&amp;quot;)
+		 and UnitCanAttack(&amp;quot;player&amp;quot;, members[1].Unit..&amp;quot;target&amp;quot;)
+		 and UnitAffectingCombat(members[1].Unit..&amp;quot;target&amp;quot;) then
+		 	TargetUnit(members[1].Unit..&amp;quot;target&amp;quot;)
+		 	PetAttack()
+		 	TargetLastTarget()
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Spirit Shell</Name><Default>false</Default><SpellID>109664</SpellID><Actions></Actions><Lua>if PQR_SpellAvilable(109964) then
+	if Nova_Pause(4) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Purify</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(527) then
+	for i=1, #members do
+		for y=1, 40 do
+			if UnitDebuff(members[i].Unit, y)
+			 and ( select(5, UnitDebuff(members[i].Unit, y)) == &amp;quot;magic&amp;quot;
+			 or select(5, UnitDebuff(members[i].Unit, y)) == &amp;quot;disease&amp;quot; ) then
+			 	PQR_CustomTarget = members[i].Unit
+			 	return true
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>PW: Solace</Name><Default>false</Default><SpellID>129250</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	if PQR_SpellAvailable(129250) 
+	 and IsPlayerSpell(129250) 
+	 and not PQR_IsMoving() then
+		if UnitBuffID(&amp;quot;player&amp;quot;, 81661)
+		 and select(4, UnitBuffID(&amp;quot;player&amp;quot;, 81661)) &amp;gt;= 5
+		 and members[1].HP &amp;gt;= 85
+		 and select(3, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt;= 90 then
+		 	if UnitExists(&amp;quot;target&amp;quot;)
+		 	 and UnitCanAttack(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+		 	 and IsSpellInRange(GetSpellInfo(129250), &amp;quot;target&amp;quot;) == 1 then
+			 	return true
+			end
+		end
+	end
+end</Lua><RecastDelay>1</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Smite Healing --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Regular Healing --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Stop Casting --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PlayerCast = UnitCastingInfo(&amp;quot;player&amp;quot;)
+
+if PlayerCast then
+	if PlayerCast == GetSpellInfo(2060) 
+	 and UnitIsUnit(PQR_CustomTarget, members[1].Unit) 
+	 and members[1].HP &amp;gt;= 102 then
+		SpellStopCasting()
+	elseif PlayerCast == GetSpellInfo(2061)
+	 and UnitIsUnit(PQR_CustomTarget, members[1].Unit)
+	 and members[1].HP &amp;gt;= 96 then
+	 	SpellStopCasting()
+	elseif PlayerCast == GetSpellInfo(2050)
+	 and UnitIsUnit(PQR_CustomTarget, members[1].Unit)
+	 and members[1].HP &amp;gt;= 100 then
+	 	SpellStopCasting()
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Power Infusion</Name><Default>false</Default><SpellID>10060</SpellID><Actions></Actions><Lua>if PQR_SpellAvailable(10060) then
+	if lowhpmembers &amp;gt;= 3
+	 and UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+	 and select(3, Nova_UnitInfo(&amp;quot;player&amp;quot;)) &amp;lt; 70 then
+	 	return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mass Dispel</Name><Default>false</Default><SpellID>32375</SpellID><Actions></Actions><Lua>if Nova_Pause(6) then
+	CastSpellByName(GetSpellInfo(32375))
+	if SpellIsTargeting() then
+		SpellTargetUnit(&amp;quot;target&amp;quot;)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></PRIEST>
