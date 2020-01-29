@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<Behavior>
+  <CombatDistance>30</CombatDistance>
+  <PullDistance>25</PullDistance>
+  <PrePullDistance>30</PrePullDistance>
+  <UseAutoAttack>True</UseAutoAttack>
+  <SendPet>True</SendPet>
+  <GlobalCooldown>2200</GlobalCooldown>
+  <PrePullController>
+  </PrePullController>
+  <PullController>
+    <Rule>
+      <Name>Frostbolt</Name>
+      <Script><![CDATA[]]></Script>
+      <MatchAll>True</MatchAll>
+      <ShouldTarget>Unchanged</ShouldTarget>
+      <Priority>0</Priority>
+      <Action>
+        <Type>ActionSpell</Type>
+        <Name>Frostbolt</Name>
+      </Action>
+      <HealthPowerCondition>
+        <ConditionTarget>Target</ConditionTarget>
+        <ConditionType>Health</ConditionType>
+        <Condition>MoreThan</Condition>
+        <Value>0</Value>
+      </HealthPowerCondition>
+    </Rule>
+  </PullController>
+  <CombatController>
+    <Rule>
+      <Name>Frost Nova</Name>
+      <Script><![CDATA[private static string FrostNova = "Frost Nova";
+public static bool ShouldRun()
+{
+     return Player.Target.DistanceToSelf < 5 && IsSpellReadyByName(FrostNova);
+}
+
+public static void Run()
+{
+     CastSpell(FrostNova);
+     MoveHelper.Backwards(true);
+     Thread.Sleep(1500);
+     MoveHelper.Backwards(false);
+}
+]]></Script>
+      <MatchAll>True</MatchAll>
+      <ShouldTarget>Unchanged</ShouldTarget>
+      <Priority>0</Priority>
+    </Rule>
+    <Rule>
+      <Name>Fireball</Name>
+      <Script><![CDATA[]]></Script>
+      <MatchAll>True</MatchAll>
+      <ShouldTarget>Unchanged</ShouldTarget>
+      <Priority>1</Priority>
+      <Action>
+        <Type>ActionSpell</Type>
+        <Name>Fireball</Name>
+      </Action>
+      <HealthPowerCondition>
+        <ConditionTarget>Target</ConditionTarget>
+        <ConditionType>Health</ConditionType>
+        <Condition>MoreThan</Condition>
+        <Value>0</Value>
+      </HealthPowerCondition>
+    </Rule>
+  </CombatController>
+  <BuffController>
+  </BuffController>
+  <RestController>
+  </RestController>
+</Behavior>
